@@ -3,11 +3,15 @@ import React, { useState } from 'react';
 const soap = require('soap-everywhere');
 
 function App() {
-    const [distance, setDistance] = useState();
-    const [autonomie, setAutonomie] = useState();
-    const [tempsChargement, setTempsChargement] = useState();
-    const [temps, setTemps] = useState(0);
-  
+  const [ville_depart, setVille_depart] = useState();
+  const [ville_arrivee, setVille_arrivee] = useState();
+  const [gps1, setGps1] = useState([]);
+  const [gps2, setGps2] = useState([]);
+  const [distance, setDistance] = useState();
+  const [autonomie, setAutonomie] = useState();
+  const [tempsChargement, setTempsChargement] = useState();
+  const [temps, setTemps] = useState(0);
+
   const handleDistanceChange = (event) => {
   setDistance(event.target.value);
 }
@@ -20,7 +24,58 @@ const handleAutonomieChange = (event) => {
 // Fonction pour mettre à jour la valeur de temps de chargement
 const handleTempsChargementChange = (event) => {
   setTempsChargement(event.target.value);
-}
+  }
+  
+  const handleVille_departChange = (event) => {
+    setVille_depart(event.target.value);
+    // requête pour récupérer la latitude et la longitude de la ville de départ
+    fetch('https://api-adresse.data.gouv.fr/search/?q=' + ville_depart)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.features[0].geometry.coordinates[0]);
+        console.log(data.features[0].geometry.coordinates[1]);
+        var lat1 = data.features[0].geometry.coordinates[0];
+        var lon1 = data.features[0].geometry.coordinates[1];
+        setGps1([lat1, lon1]);
+        calculDistance();
+      })
+  }
+
+  const handleVille_arriveeChange = (event) => {
+    setVille_arrivee(event.target.value);
+    fetch('https://api-adresse.data.gouv.fr/search/?q=' + ville_arrivee)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.features[0].geometry.coordinates[0]);
+        console.log(data.features[0].geometry.coordinates[1]);
+        var lat2 = data.features[0].geometry.coordinates[0];
+        var lon2 = data.features[0].geometry.coordinates[1];
+        setGps2([lat2, lon2]);
+        calculDistance();
+      })
+  }
+
+  function calculDistance()
+  {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(gps2[0] - gps1[0]);  // deg2rad below
+    var dLon = deg2rad(gps2[1] - gps1[1]);
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(gps1[0])) * Math.cos(deg2rad(gps2[0])) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2)
+      ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    // arrondir
+    d = Math.round(d * 100) / 100;
+    setDistance(d);
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180)
+  }
+
 
 
   const sendRequest = () => {
@@ -50,9 +105,21 @@ const handleTempsChargementChange = (event) => {
     <>
       <div className="App">
         <h1 className="title">Voyage APP</h1>
+
+                  <div class="destination">
+                      <label>Ville de départ </label>
+          <input type="text" name="distance" value={ville_depart} onChange={handleVille_departChange} placeholder="km" />
+          <p class="gps1">{gps1[0]} {gps1[1]}</p>
+            <label>Ville d'arrivée </label>
+          <input type="text" name="distance" value={ville_arrivee} onChange={handleVille_arriveeChange} placeholder="km" />
+          <p class="gps2">{gps2[0]} {gps2[1]}</p>
+        
+        </div>
+        
+
         <div class="container">
         <div className="divform">
-        <form>
+            <form>
           <label>Distance </label>
           <input type="number" name="distance" value={distance} onChange={handleDistanceChange} placeholder="km"/>
           <label>Autonomie</label>
