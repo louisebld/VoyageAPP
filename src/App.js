@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const soap = require('soap-everywhere');
 
 function App() {
+  
   const [ville_depart, setVille_depart] = useState();
   const [ville_arrivee, setVille_arrivee] = useState();
   const [gps1, setGps1] = useState([]);
@@ -51,7 +52,6 @@ const handleTempsChargementChange = (event) => {
         var lat2 = data.features[0].geometry.coordinates[0];
         var lon2 = data.features[0].geometry.coordinates[1];
         setGps2([lat2, lon2]);
-        calculDistance();
       })
   }
 
@@ -74,6 +74,15 @@ const handleTempsChargementChange = (event) => {
 
   function deg2rad(deg) {
     return deg * (Math.PI / 180)
+  }
+
+  const switchVilles = () => {
+    var temp = ville_depart;
+    setVille_depart(ville_arrivee);
+    setVille_arrivee(temp);
+    calculDistance();
+    handleVille_arriveeChange();
+    handleVille_departChange();
   }
 
 
@@ -105,14 +114,20 @@ const handleTempsChargementChange = (event) => {
     <>
       <div className="App">
         <h1 className="title">Voyage APP</h1>
-
-                  <div class="destination">
-                      <label>Ville de départ </label>
+        <div class="destination">
+          <div className="depart">
+            <label>Départ </label>
           <input type="text" name="distance" value={ville_depart} onChange={handleVille_departChange} placeholder="km" />
-          <p class="gps1">{gps1[0]} {gps1[1]}</p>
-            <label>Ville d'arrivée </label>
+            <p class="gps1">{gps1[0]} {gps1[1]}</p>
+          </div>
+          <div className="switch">
+            <button type="button" onClick={switchVilles}>←→</button>
+          </div>
+          <div className="arrive">
+            <label>Arrivée </label>
           <input type="text" name="distance" value={ville_arrivee} onChange={handleVille_arriveeChange} placeholder="km" />
-          <p class="gps2">{gps2[0]} {gps2[1]}</p>
+            <p class="gps2">{gps2[0]} {gps2[1]}</p>
+            </div>
         
         </div>
         
@@ -132,9 +147,9 @@ const handleTempsChargementChange = (event) => {
           <p>Temps de voyage : {temps}</p>
         </div>
         </div>
-        <div className="map">
-              <img className="imgmap" src="https://as1.ftcdn.net/v2/jpg/02/25/77/30/1000_F_225773013_7VnI8Q20BuedFagxj2xvAcYNBTO5QhbN.jpg" alt="placeholder" />
-          </div>
+        {/* <div className="map" id="map"> */}
+              {/* <img className="imgmap" src="https://as1.ftcdn.net/v2/jpg/02/25/77/30/1000_F_225773013_7VnI8Q20BuedFagxj2xvAcYNBTO5QhbN.jpg" alt="placeholder" /> */}
+          {/* </div> */}
           </div>
 
       </div>
