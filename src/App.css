@@ -32,7 +32,25 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.title {
+  color: #ff3e00;
+  text-transform: uppercase;
+  font-size: 4em;
+  font-weight: 100;
+}
+
+.divform {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 100%;
+  /* background-color: red; */
 }
