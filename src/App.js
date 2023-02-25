@@ -28,7 +28,18 @@ const handleTempsChargementChange = (event) => {
     soap.createClient('http://127.0.0.1:8080/distance?wsdl', function (err, client) {
       client.distance({ distance: distance, autonomie: autonomie, tempschargement: tempsChargement }, function (err, result) {
         console.log(result);
-        setTemps(result.temps);
+
+        // convertir en minutes
+        var heures = Math.floor(result.temps);
+        var minutes = Math.round((result.temps - heures) * 60);
+        if (heures == 0) {
+          var temps = minutes + " minutes";
+        }
+        else {
+          var temps = heures + " heures " + minutes + " minutes";
+        }
+
+        setTemps(temps);
       });
     }
     );
@@ -51,7 +62,7 @@ const handleTempsChargementChange = (event) => {
           <button type="button" onClick={sendRequest}>Calculer</button>
             </form>
           <div className="divtemps">
-          <p>Temps de voyage : {temps} heures</p>
+          <p>Temps de voyage : {temps}</p>
         </div>
         </div>
         <div className="map">

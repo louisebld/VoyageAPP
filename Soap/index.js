@@ -12,7 +12,14 @@ const service = {
 		DistanceServiceSoapPort: {
 			distance: function (args) {
 				console.log(args);
-				var temps = args.distance / args.autonomie * 60 + args.tempschargement;
+				var vitesse = 80;
+				var nbcharge = 0;
+				if (args.autonomie < args.distance) {
+					nbcharge = Math.ceil(args.distance / args.autonomie);
+				}
+				var temps = (args.distance / vitesse) + (nbcharge * args.tempschargement / 60);
+
+				var temps = Math.round(temps * 100) / 100;
 				console.log("temps :", temps)
 				
 				return {								
