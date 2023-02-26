@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import askGPSVille from "../services/gpsservice";
+import { MdPlace } from 'react-icons/md';
+import {HiOutlineSwitchHorizontal} from 'react-icons/hi';
 import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
 
 function StartEndComponent() {
@@ -57,18 +59,19 @@ function StartEndComponent() {
   
   return (
     <div className="destination">
-          <div className="depart">
-            <label>Départ</label>
+      <div className="depart">
+                {/* <MdPlace/> */}
+        <label>Départ</label>
           <input type="text" name="distance" value={ville_depart} onChange={handleVille_departChange} placeholder="Ville" />
-              <p className="gps1">{gps1[0]} {gps1[1]}</p>
+              {/* <p className="gps1">{gps1[0]} {gps1[1]}</p> */}
           </div>
           <div className="switch">
-            <button type="button" onClick={switchVilles}>←→</button>
+            <button type="button" onClick={switchVilles}><HiOutlineSwitchHorizontal/></button>
           </div>
           <div className="arrive">
             <label>Arrivée </label>
           <input type="text" name="distance" value={ville_arrivee} onChange={handleVille_arriveeChange} placeholder="Ville" />
-            <p className="gps2">{gps2[0]} {gps2[1]}</p>
+            {/* <p className="gps2">{gps2[0]} {gps2[1]}</p> */}
             </div>
         
         </div>

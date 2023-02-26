@@ -1,16 +1,28 @@
 .App {
   text-align: center;
   margin-top: 50px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); */
   width: 60%;
   margin: 20px auto;
   padding: 20px;
-
+  /* border-radius: 50px; */
+  background-color: #dad7cd;
 }
 
 .title {
   font-size: 48px;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.van {
+  width: 100px;
+  margin-right: 20px;
 }
 
 .container {
@@ -19,6 +31,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 50px;
+  margin-top:50px;
 }
 
 .divform {
@@ -32,7 +45,11 @@
     width: 45%;
     height:300px;
       vertical-align: top;
-    /* Pour aligner le contenu en haut de chaque div */
+}
+
+.parag {
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .imgmap {
@@ -43,7 +60,12 @@
 .destination {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
+  background-color: #a3b18a;
+  padding-top: 50px;
+  border-radius: 50px;
+  height:100px;
+  
 }
 
 .destination .depart,
@@ -60,7 +82,7 @@ label {
   text-align: center;
 }
 
-input[type="text"] {
+input {
   margin-left:20px;
   padding: 10px;
   border: none;
@@ -83,17 +105,10 @@ label {
   margin-bottom: 10px;
 }
 
-input[type="number"] {
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-}
 
 button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #3a5a40;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -102,7 +117,7 @@ button {
 }
 
 button:hover {
-  background-color: #0069d9;
+  background-color: #588157;
 }
 
 .divtemps {

@@ -4,6 +4,7 @@ import {useSelector, useDispatch } from 'react-redux';
 import StartEndComponent from './components/StartEndComponent';
 import FormTimeComponent from './components/FormTimeComponent';
 import findBorne from './services/bornesservice';
+import van from './assets/van.png';
 
 const soap = require('soap-everywhere');
 // include OpenLayers
@@ -12,7 +13,7 @@ var ol = require('openlayers');
 
 function App() {
   
-    var gps1 = useSelector((state) => state.datas.gps_depart);
+  var gps1 = useSelector((state) => state.datas.gps_depart);
   var gps2 = useSelector((state) => state.datas.gps_arrivee);
   
   var [borneDepart, setBorneDepart] = useState(null);
@@ -113,8 +114,11 @@ var map = new ol.Map({
   return (
     <>
       <div className="App">
-
-        <h1 className="title">Voyage APP</h1>
+        <div className="titleGroup">
+          <img className="van" src={van} alt="placeholder" />
+          <h1 className="title">PLANIFIE TON VOYAGE</h1>
+        </div>
+        {/* <p className="parag">Planifie ton voyage</p> */}
           <StartEndComponent />        
 
         <div class="container">
