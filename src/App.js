@@ -12,35 +12,20 @@ var ol = require('openlayers');
 
 function App() {
   
-  const [ville_depart, setVille_depart] = useState();
-  const [ville_arrivee, setVille_arrivee] = useState();
-  const [gps1, setGps1] = useState([]);
-  const [gps2, setGps2] = useState([]);
-  const [distance, setDistance] = useState();
-  const [autonomie, setAutonomie] = useState();
-  const [tempsChargement, setTempsChargement] = useState();
-  const [temps, setTemps] = useState(0);
+    var gps1 = useSelector((state) => state.datas.gps_depart);
+  var gps2 = useSelector((state) => state.datas.gps_arrivee);
+  
+  var [borneDepart, setBorneDepart] = useState(null);
 
 
-  function calculDistance()
-  {
-    var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(gps2[0] - gps1[0]);  // deg2rad below
-    var dLon = deg2rad(gps2[1] - gps1[1]);
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(deg2rad(gps1[0])) * Math.cos(deg2rad(gps2[0])) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2)
-      ;
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c; // Distance in km
-    // arrondir
-    d = Math.round(d * 100) / 100;
-    setDistance(d);
-  }
-
+  const dispatch = useDispatch();
+  
   const callBorne = () => {
-    findBorne(48.8520930694, 2.34738897685);
+    // console.log(gps1, gps2)
+    findBorne(gps1[0], gps1[1]).then((result) => {
+      console.log("borne :", result)
+      setBorneDepart(result.ad_station);
+    });
   }
 
   function deg2rad(deg) {
@@ -139,7 +124,7 @@ var map = new ol.Map({
               {/* <img className="imgmap" src="https://as1.ftcdn.net/v2/jpg/02/25/77/30/1000_F_225773013_7VnI8Q20BuedFagxj2xvAcYNBTO5QhbN.jpg" alt="placeholder" /> */}
           {/* </div> */}
           </div>
-
+        <p>{borneDepart}</p>
         <button  onClick={callBorne}>Search</button>
       </div>
     </>
