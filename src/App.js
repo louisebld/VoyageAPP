@@ -1,6 +1,12 @@
 import './App.css';
 import React, { useState } from 'react';
+import {useSelector, useDispatch } from 'react-redux';
+import StartEndComponent from './components/StartEndComponent';
+import FormTimeComponent from './components/FormTimeComponent';
 const soap = require('soap-everywhere');
+// include OpenLayers
+var ol = require('openlayers');
+
 
 function App() {
   
@@ -13,47 +19,6 @@ function App() {
   const [tempsChargement, setTempsChargement] = useState();
   const [temps, setTemps] = useState(0);
 
-  const handleDistanceChange = (event) => {
-  setDistance(event.target.value);
-}
-
-// Fonction pour mettre à jour la valeur d'autonomie
-const handleAutonomieChange = (event) => {
-  setAutonomie(event.target.value);
-}
-
-// Fonction pour mettre à jour la valeur de temps de chargement
-const handleTempsChargementChange = (event) => {
-  setTempsChargement(event.target.value);
-  }
-  
-  const handleVille_departChange = (event) => {
-    setVille_depart(event.target.value);
-    // requête pour récupérer la latitude et la longitude de la ville de départ
-    fetch('https://api-adresse.data.gouv.fr/search/?q=' + ville_depart)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.features[0].geometry.coordinates[0]);
-        console.log(data.features[0].geometry.coordinates[1]);
-        var lat1 = data.features[0].geometry.coordinates[0];
-        var lon1 = data.features[0].geometry.coordinates[1];
-        setGps1([lat1, lon1]);
-        calculDistance();
-      })
-  }
-
-  const handleVille_arriveeChange = (event) => {
-    setVille_arrivee(event.target.value);
-    fetch('https://api-adresse.data.gouv.fr/search/?q=' + ville_arrivee)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.features[0].geometry.coordinates[0]);
-        console.log(data.features[0].geometry.coordinates[1]);
-        var lat2 = data.features[0].geometry.coordinates[0];
-        var lon2 = data.features[0].geometry.coordinates[1];
-        setGps2([lat2, lon2]);
-      })
-  }
 
   function calculDistance()
   {
@@ -76,77 +41,94 @@ const handleTempsChargementChange = (event) => {
     return deg * (Math.PI / 180)
   }
 
-  const switchVilles = () => {
-    var temp = ville_depart;
-    setVille_depart(ville_arrivee);
-    setVille_arrivee(temp);
-    calculDistance();
-    handleVille_arriveeChange();
-    handleVille_departChange();
-  }
 
 
+// Créer les points de départ et d'arrivée
+var start = ol.proj.fromLonLat([-122.4194, 37.7749]);
+var end = ol.proj.fromLonLat([-121.8811, 37.3352]);
 
-  const sendRequest = () => {
-          // console.log("bjr");
-    soap.createClient('http://127.0.0.1:8080/distance?wsdl', function (err, client) {
-      client.distance({ distance: distance, autonomie: autonomie, tempschargement: tempsChargement }, function (err, result) {
-        console.log(result);
+// Créer une couche vectorielle pour l'itinéraire
+var routeLayer = new ol.layer.Vector({
+  source: new ol.source.Vector({
+    features: []
+  }),
+  style: new ol.style.Style({
+    stroke: new ol.style.Stroke({
+      width: 6,
+      color: [40, 40, 40, 0.8]
+    })
+  })
+});
 
-        // convertir en minutes
-        var heures = Math.floor(result.temps);
-        var minutes = Math.round((result.temps - heures) * 60);
-        if (heures == 0) {
-          var temps = minutes + " minutes";
-        }
-        else {
-          var temps = heures + " heures " + minutes + " minutes";
-        }
+// Ajouter la couche vectorielle à la carte
+var map = new ol.Map({
+  target: 'map',
+  layers: [
+    new ol.layer.Tile({
+      source: new ol.source.OSM()
+    }),
+    routeLayer
+  ],
+  view: new ol.View({
+    center: ol.proj.fromLonLat([-122.15, 37.47]),
+    zoom: 9
+  })
+});
 
-        setTemps(temps);
-      });
-    }
-    );
-  }
+// Calculer l'itinéraire avec l'API OSRM
+var url = 'https://router.project-osrm.org/route/v1/driving/' +
+  ol.proj.toLonLat(start)[1] + ',' + ol.proj.toLonLat(start)[0] + ';' +
+  ol.proj.toLonLat(end)[1] + ',' + ol.proj.toLonLat(end)[0] + '?steps=true';
+
+fetch(url)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(json) {
+    var route = json.routes[0].geometry;
+    var routeFeature = new ol.format.Polyline({
+      factor: 1e6
+    }).readFeature(route, {
+      dataProjection: 'EPSG:4326',
+      featureProjection: 'EPSG:3857'
+    });
+    routeLayer.getSource().addFeature(routeFeature);
+
+    // Ajuster la vue de la carte pour s'adapter à la ligne d'itinéraire
+    var extent = routeFeature.getGeometry().getExtent();
+    map.getView().fit(extent, {
+      padding: [100, 100, 100, 100]
+    });
+  });
+
+  
+
+
+var map = new ol.Map({
+  target: 'map',
+  layers: [
+    new ol.layer.Tile({
+      source: new ol.source.OSM()
+    })
+  ],
+  view: new ol.View({
+    center: ol.proj.fromLonLat([-122.4194, 37.7749]), // Centrez la carte sur un point par défaut
+    zoom: 12
+  })
+});
+
 
 
   return (
     <>
       <div className="App">
+
         <h1 className="title">Voyage APP</h1>
-        <div class="destination">
-          <div className="depart">
-            <label>Départ </label>
-          <input type="text" name="distance" value={ville_depart} onChange={handleVille_departChange} placeholder="km" />
-            <p class="gps1">{gps1[0]} {gps1[1]}</p>
-          </div>
-          <div className="switch">
-            <button type="button" onClick={switchVilles}>←→</button>
-          </div>
-          <div className="arrive">
-            <label>Arrivée </label>
-          <input type="text" name="distance" value={ville_arrivee} onChange={handleVille_arriveeChange} placeholder="km" />
-            <p class="gps2">{gps2[0]} {gps2[1]}</p>
-            </div>
-        
-        </div>
-        
+          <StartEndComponent />        
 
         <div class="container">
-        <div className="divform">
-            <form>
-          <label>Distance </label>
-          <input type="number" name="distance" value={distance} onChange={handleDistanceChange} placeholder="km"/>
-          <label>Autonomie</label>
-          <input type="number" name="autonomie" value={autonomie} onChange={handleAutonomieChange} placeholder="km" />
-          <label>Chargement</label>
-          <input type="number" name="chargement" value={tempsChargement} onChange={handleTempsChargementChange} placeholder="min." />
-          <button type="button" onClick={sendRequest}>Calculer</button>
-            </form>
-          <div className="divtemps">
-          <p>Temps de voyage : {temps}</p>
-        </div>
-        </div>
+          <FormTimeComponent/>
+
         {/* <div className="map" id="map"> */}
               {/* <img className="imgmap" src="https://as1.ftcdn.net/v2/jpg/02/25/77/30/1000_F_225773013_7VnI8Q20BuedFagxj2xvAcYNBTO5QhbN.jpg" alt="placeholder" /> */}
           {/* </div> */}
