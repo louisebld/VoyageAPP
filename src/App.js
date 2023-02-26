@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import {useSelector, useDispatch } from 'react-redux';
 import StartEndComponent from './components/StartEndComponent';
 import FormTimeComponent from './components/FormTimeComponent';
+import findBorne from './services/bornesservice';
+
 const soap = require('soap-everywhere');
 // include OpenLayers
 var ol = require('openlayers');
@@ -35,6 +37,10 @@ function App() {
     // arrondir
     d = Math.round(d * 100) / 100;
     setDistance(d);
+  }
+
+  const callBorne = () => {
+    findBorne(48.8520930694, 2.34738897685);
   }
 
   function deg2rad(deg) {
@@ -134,6 +140,7 @@ var map = new ol.Map({
           {/* </div> */}
           </div>
 
+        <button  onClick={callBorne}>Search</button>
       </div>
     </>
       
