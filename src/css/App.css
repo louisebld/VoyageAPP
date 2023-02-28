@@ -2,7 +2,7 @@
   text-align: center;
   margin-top: 50px;
   /* box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); */
-  width: 60%;
+  /* width: 60%; */
   margin: 20px auto;
   padding: 20px;
   /* border-radius: 50px; */
@@ -28,7 +28,7 @@
 .container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   margin-bottom: 50px;
   margin-top:50px;
@@ -40,11 +40,9 @@
   vertical-align: top;
 }
 
-.map {
-    display: inline-block;
-    width: 45%;
-    height:300px;
-      vertical-align: top;
+.leaflet-container {
+  width: 1000px;
+  height: 700px;
 }
 
 .parag {

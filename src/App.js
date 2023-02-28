@@ -5,6 +5,7 @@ import StartEndComponent from './components/StartEndComponent';
 import FormTimeComponent from './components/FormTimeComponent';
 import findBorne from './services/bornesservice';
 import van from './assets/van.png';
+import Map from './components/Map';
 
 const soap = require('soap-everywhere');
 // include OpenLayers
@@ -121,15 +122,15 @@ var map = new ol.Map({
         {/* <p className="parag">Planifie ton voyage</p> */}
           <StartEndComponent />        
 
-        <div class="container">
+        <div className="container">
           <FormTimeComponent/>
 
-        {/* <div className="map" id="map"> */}
-              {/* <img className="imgmap" src="https://as1.ftcdn.net/v2/jpg/02/25/77/30/1000_F_225773013_7VnI8Q20BuedFagxj2xvAcYNBTO5QhbN.jpg" alt="placeholder" /> */}
-          {/* </div> */}
+        <div className="map" id="map">
+              <Map/>
+          </div>
           </div>
         <p>{borneDepart}</p>
-        <button  onClick={callBorne}>Search</button>
+        <button onClick={callBorne}>Search</button>
       </div>
     </>
       
