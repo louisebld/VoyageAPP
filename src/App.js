@@ -30,98 +30,17 @@ function App() {
     });
   }
 
-  function deg2rad(deg) {
-    return deg * (Math.PI / 180)
-  }
-
-
-
-// Créer les points de départ et d'arrivée
-var start = ol.proj.fromLonLat([-122.4194, 37.7749]);
-var end = ol.proj.fromLonLat([-121.8811, 37.3352]);
-
-// Créer une couche vectorielle pour l'itinéraire
-var routeLayer = new ol.layer.Vector({
-  source: new ol.source.Vector({
-    features: []
-  }),
-  style: new ol.style.Style({
-    stroke: new ol.style.Stroke({
-      width: 6,
-      color: [40, 40, 40, 0.8]
-    })
-  })
-});
-
-// Ajouter la couche vectorielle à la carte
-var map = new ol.Map({
-  target: 'map',
-  layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
-    }),
-    routeLayer
-  ],
-  view: new ol.View({
-    center: ol.proj.fromLonLat([-122.15, 37.47]),
-    zoom: 9
-  })
-});
-
-// Calculer l'itinéraire avec l'API OSRM
-var url = 'https://router.project-osrm.org/route/v1/driving/' +
-  ol.proj.toLonLat(start)[1] + ',' + ol.proj.toLonLat(start)[0] + ';' +
-  ol.proj.toLonLat(end)[1] + ',' + ol.proj.toLonLat(end)[0] + '?steps=true';
-
-fetch(url)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(json) {
-    var route = json.routes[0].geometry;
-    var routeFeature = new ol.format.Polyline({
-      factor: 1e6
-    }).readFeature(route, {
-      dataProjection: 'EPSG:4326',
-      featureProjection: 'EPSG:3857'
-    });
-    routeLayer.getSource().addFeature(routeFeature);
-
-    // Ajuster la vue de la carte pour s'adapter à la ligne d'itinéraire
-    var extent = routeFeature.getGeometry().getExtent();
-    map.getView().fit(extent, {
-      padding: [100, 100, 100, 100]
-    });
-  });
-
-  
-
-
-var map = new ol.Map({
-  target: 'map',
-  layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
-    })
-  ],
-  view: new ol.View({
-    center: ol.proj.fromLonLat([-122.4194, 37.7749]), // Centrez la carte sur un point par défaut
-    zoom: 12
-  })
-});
-
-
-
   return (
     <>
       <div className="App">
+        <div className="header">
         <div className="titleGroup">
           <img className="van" src={van} alt="placeholder" />
           <h1 className="title">PLANIFIE TON VOYAGE</h1>
         </div>
         {/* <p className="parag">Planifie ton voyage</p> */}
           <StartEndComponent />        
-
+        </div>
         <div className="container">
           <FormTimeComponent/>
 

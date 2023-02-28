@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   depart: "",
   arrivee: "",
-  gps_depart: [],
+  gps_depart: [45.564601, 5.917781],
   gps_arrivee: [],
   distance: 0,
   autonomie: 0,
