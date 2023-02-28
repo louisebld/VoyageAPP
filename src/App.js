@@ -1,4 +1,4 @@
-import './App.css';
+import './css/App.css';
 import React, { useState } from 'react';
 import {useSelector, useDispatch } from 'react-redux';
 import StartEndComponent from './components/StartEndComponent';
