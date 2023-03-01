@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Polyline} from "react-leaflet";
 import L from 'leaflet';
+import 'leaflet-routing-machine';
+
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet'
 
@@ -17,6 +20,9 @@ function Map() {
   var zoom = useSelector((state) => state.map.zoom);
   var center = useSelector((state) => state.map.center);
   var markers = useSelector((state) => state.map.markers);
+
+  var waypoints = useSelector((state) => state.map.waypoints);
+
   // var polyline = useSelector((state) => state.map.polyline);
   // var bounds = useSelector((state) => state.map.bounds);
 
@@ -27,6 +33,9 @@ function Map() {
   const bounds = [gps1, gps2];
 
   console.log("bounds", bounds)
+
+
+
 
   const iconMarker = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] });
 
@@ -48,15 +57,18 @@ function Map() {
     });
 
 
+
+
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-    // const marker = L.marker([51.5, -0.09], { icon: iconMarker }).addTo(map);
-    // const marker2 = L.marker([51.507, -0.12], { icon: iconMarker }).addTo(map);
 
-    // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-    // marker2.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-
-    // const polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
+    
+    const controls = L.Routing.control({
+    waypoints: [
+        L.latLng(gps1[0], gps1[1]),
+        L.latLng(gps2[0], gps2[1])
+    ]
+  }).addTo(map);
 
     // ajoute les marqueurs sur la carte
     markers.forEach((marker) => {

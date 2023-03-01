@@ -79,7 +79,6 @@ function StartEndComponent() {
   
   return (
     <div className="destination">
-      <button onClick={chercher} className="button_search">Chercher</button>
       <div className="depart">
                 {/* <MdPlace/> */}
         {/* <label>Départ</label> */}
@@ -96,6 +95,8 @@ function StartEndComponent() {
         <ArriveInput/>
       
       </div>
+            <button onClick={chercher} className="button_search">Chercher</button>
+
         
         </div>
   );

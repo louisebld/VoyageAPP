@@ -5,9 +5,10 @@ const initialState = {
   center: [51.505, -0.09],
   depart: [45.564601, 5.917781],
   arrivee: [51.507, -0.12],
-  bounds : [[45.564601, 5.917781], [51.507, -0.12]],
+  bounds: [[45.564601, 5.917781], [51.507, -0.12]],
   markers: [
-    // [45.564601, 5.917781], [45.564601, 5.917781]
+  ],
+  waypoints: [
   ],
 }
 
@@ -35,10 +36,15 @@ export const mapSlice = createSlice({
     addMarker(state, action) {
       // state.markers.push([action.payload[0][1], action.payload[0][0]]);
       state.markers.push(action.payload);
+      // this.setWayPoints(action.payload);
     },
     
     setBounds: (state, action) => {
       state.bounds = action.payload;
+    },
+
+    setWayPoints: (state, action) => {
+      state.waypoints = action.payload;
     }
 
 
