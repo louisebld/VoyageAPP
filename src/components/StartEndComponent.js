@@ -6,6 +6,8 @@ import {HiOutlineSwitchHorizontal} from 'react-icons/hi';
 import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
 import {addMarker, setBounds} from '../store/map';
 import L from 'leaflet';
+import DepartInput from "./DepartInput";
+import ArriveInput from "./ArriveInput";
 
 function StartEndComponent() {
 
@@ -90,7 +92,8 @@ function StartEndComponent() {
       <div className="depart">
                 {/* <MdPlace/> */}
         <label>Départ</label>
-          <input type="text" name="depart" onChange={handleVille_departChange}  placeholder="Ville" />
+        {/* <input type="text" name="depart" onChange={handleVille_departChange} placeholder="Ville" /> */}
+          <DepartInput/>
               {/* <p className="gps1">{gps1[0]} {gps1[1]}</p> */}
           </div>
           <div className="switch">
@@ -98,9 +101,10 @@ function StartEndComponent() {
           </div>
           <div className="arrive">
             <label>Arrivée </label>
-          <input type="text" name="arrive" onChange={handleVille_arriveeChange}  placeholder="Ville" />
-            {/* <p className="gps2">{gps2[0]} {gps2[1]}</p> */}
-            </div>
+        {/* <input type="text" name="arrive" onChange={handleVille_arriveeChange}  placeholder="Ville" /> */}
+        <ArriveInput/>
+      
+      </div>
         
         </div>
   );

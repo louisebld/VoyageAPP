@@ -6,6 +6,7 @@ import FormTimeComponent from './components/FormTimeComponent';
 import findBorne from './services/bornesservice';
 import van from './assets/van.png';
 import Map from './components/Map';
+import CityInput from './components/DepartInput';
 
 const soap = require('soap-everywhere');
 // include OpenLayers
@@ -51,6 +52,7 @@ function App() {
         <p>{borneDepart}</p>
         <button onClick={callBorne}>Search</button>
       </div>
+      <CityInput/>
     </>
       
     

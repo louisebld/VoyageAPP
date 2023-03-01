@@ -1,0 +1,51 @@
+.city-input-container {
+    position: relative;
+    width: 100%;
+}
+
+.city-input {
+    /* width: 100%; */
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+
+.city-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 25%;
+    z-index: 999;
+    width: 50%;
+    max-height: 200px;
+    overflow-y: auto;
+    /* enlever barre de défilement */
+    scrollbar-width: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.city-suggestion {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.city-suggestion:hover,
+.city-suggestion:focus {
+    background-color: #f5f5f5;
+}
+
+ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: 15px;
+    /* à adapter */
+}
