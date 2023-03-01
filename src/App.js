@@ -52,7 +52,6 @@ function App() {
         <p>{borneDepart}</p>
         <button onClick={callBorne}>Search</button>
       </div>
-      <CityInput/>
     </>
       
     

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
 
-import '../css/input.css';
+import '../css/InputComponent.css';
 import askGPSVille from '../services/gpsservice';
 
 function CityInput() {

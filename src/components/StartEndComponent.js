@@ -8,7 +8,7 @@ import {addMarker, setBounds, setDepart, setArrive} from '../store/map';
 import L from 'leaflet';
 import DepartInput from "./DepartInput";
 import ArriveInput from "./ArriveInput";
-
+import '../css/StartEndComponent.css'
 function StartEndComponent() {
 
     var ville_depart = useSelector((state) => state.datas.depart);
@@ -79,10 +79,10 @@ function StartEndComponent() {
   
   return (
     <div className="destination">
-      <button onClick={chercher}>Chercher</button>
+      <button onClick={chercher} className="button_search">Chercher</button>
       <div className="depart">
                 {/* <MdPlace/> */}
-        <label>Départ</label>
+        {/* <label>Départ</label> */}
         {/* <input type="text" name="depart" onChange={handleVille_departChange} placeholder="Ville" /> */}
           <DepartInput/>
               {/* <p className="gps1">{gps1[0]} {gps1[1]}</p> */}
@@ -91,7 +91,7 @@ function StartEndComponent() {
             <button type="button" onClick={switchVilles}><HiOutlineSwitchHorizontal/></button>
           </div>
           <div className="arrive">
-            <label>Arrivée </label>
+            {/* <label>Arrivée </label> */}
         {/* <input type="text" name="arrive" onChange={handleVille_arriveeChange}  placeholder="Ville" /> */}
         <ArriveInput/>
       

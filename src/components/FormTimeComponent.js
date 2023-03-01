@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setDistance, setAutonomie, setTempsChargement, setTemps } from "../store/datas";
 import sendSoapRequest from '../services/soapservice';
-
+import '../css/FormTimeComponent.css'
 var soap = require('soap-everywhere');
 
 
