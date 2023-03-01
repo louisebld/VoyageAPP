@@ -33,7 +33,8 @@ export const mapSlice = createSlice({
     }
     ,
     addMarker(state, action) {
-      state.markers.push([action.payload[0][1], action.payload[0][0]]);
+      // state.markers.push([action.payload[0][1], action.payload[0][0]]);
+      state.markers.push(action.payload);
     },
     
     setBounds: (state, action) => {

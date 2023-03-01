@@ -4,7 +4,7 @@ import askGPSVille from "../services/gpsservice";
 import { MdPlace } from 'react-icons/md';
 import {HiOutlineSwitchHorizontal} from 'react-icons/hi';
 import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
-import {addMarker, setBounds} from '../store/map';
+import {addMarker, setBounds, setDepart, setArrive} from '../store/map';
 import L from 'leaflet';
 import DepartInput from "./DepartInput";
 import ArriveInput from "./ArriveInput";
@@ -67,22 +67,13 @@ function StartEndComponent() {
 
   function chercher() {
 
-    askGPSVille(ville_depart).then((result) => {
-      console.log(result)
-      console.log(result[0])
-      dispatch(setGps_depart(result));
-      var marker = [result];
-      dispatch(addMarker(marker));
-      // setBounds(marker)
-    });
+    dispatch(setDistance(calculDistance()));
+    dispatch(setDepart(gps1))
+    dispatch(setArrive(gps2))
 
-    // askGPSVille(ville_arrivee).then((result) => {
-    //   dispatch(setGps_arrivee(result));
-    // });
+    dispatch(addMarker(gps1)) 
+    dispatch(addMarker(gps2))
 
-    // var marker2 = [gps2[0], gps2[1]];
-    // dispatch(addMarker(marker));
-    // dispatch(addMarker(marker2));
 
   }
   

@@ -11,7 +11,8 @@ import { Icon } from 'leaflet'
 function Map() {
   // const position = [51.505, -0.09]
   
-  var gps1 = useSelector((state) => state.datas.gps_depart);
+  var gps1 = useSelector((state) => state.map.depart);
+  var gps2 = useSelector((state) => state.map.arrivee);
 
   var zoom = useSelector((state) => state.map.zoom);
   var center = useSelector((state) => state.map.center);
@@ -21,7 +22,7 @@ function Map() {
 
   const position = [51.505, -0.09]; // position initiale
   // const gps1 = [51.505, -0.1]; // premier point
-  const gps2 = [51.507, -0.12]; // deuxième point
+
   const [latlngs, setLatlngs] = useState([gps1, gps2]); // tableau des points à relier
   const bounds = [gps1, gps2];
 
