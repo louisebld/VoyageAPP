@@ -4,13 +4,19 @@ import askGPSVille from "../services/gpsservice";
 import { MdPlace } from 'react-icons/md';
 import {HiOutlineSwitchHorizontal} from 'react-icons/hi';
 import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
+import {addMarker, setBounds} from '../store/map';
+import L from 'leaflet';
 
 function StartEndComponent() {
 
     var ville_depart = useSelector((state) => state.datas.depart);
     var ville_arrivee = useSelector((state) => state.datas.arrivee);
     var gps1 = useSelector((state) => state.datas.gps_depart);
-    var gps2 = useSelector((state) => state.datas.gps_arrivee);
+  var gps2 = useSelector((state) => state.datas.gps_arrivee);
+  
+  // var markers = useSelector((state) => state.map.markers);
+  // var bounds = useSelector((state) => state.map.bounds);
+
     const dispatch = useDispatch();
 
 
@@ -21,19 +27,19 @@ function StartEndComponent() {
 
   const handleVille_departChange = (event) => {
     dispatch(setVille_depart(event.target.value));
-    askGPSVille(ville_depart).then((result) => {
-      dispatch(setGps_depart(result));
-    });
-    dispatch(setDistance(calculDistance()));
+    // askGPSVille(ville_depart).then((result) => {
+    //   dispatch(setGps_depart(result));
+    // });
+    // dispatch(setDistance(calculDistance()));
   }
   
 
   const handleVille_arriveeChange = (event) => {
     dispatch(setVille_arrivee(event.target.value));
-    askGPSVille(ville_arrivee).then((result) => {
-      dispatch(setGps_arrivee(result));
-    });
-    dispatch(setDistance(calculDistance()));
+    // askGPSVille(ville_arrivee).then((result) => {
+    //   dispatch(setGps_arrivee(result));
+    // });
+    // dispatch(setDistance(calculDistance()));
   }
 
   function calculDistance() {
@@ -56,13 +62,35 @@ function StartEndComponent() {
     distance = Math.round(distance * 100) / 100;
     return distance;
   }
+
+  function chercher() {
+
+    askGPSVille(ville_depart).then((result) => {
+      console.log(result)
+      console.log(result[0])
+      dispatch(setGps_depart(result));
+      var marker = [result];
+      dispatch(addMarker(marker));
+      // setBounds(marker)
+    });
+
+    // askGPSVille(ville_arrivee).then((result) => {
+    //   dispatch(setGps_arrivee(result));
+    // });
+
+    // var marker2 = [gps2[0], gps2[1]];
+    // dispatch(addMarker(marker));
+    // dispatch(addMarker(marker2));
+
+  }
   
   return (
     <div className="destination">
+      <button onClick={chercher}>Chercher</button>
       <div className="depart">
                 {/* <MdPlace/> */}
         <label>Départ</label>
-          <input type="text" name="distance" value={ville_depart} onChange={handleVille_departChange} placeholder="Ville" />
+          <input type="text" name="depart" onChange={handleVille_departChange}  placeholder="Ville" />
               {/* <p className="gps1">{gps1[0]} {gps1[1]}</p> */}
           </div>
           <div className="switch">
@@ -70,7 +98,7 @@ function StartEndComponent() {
           </div>
           <div className="arrive">
             <label>Arrivée </label>
-          <input type="text" name="distance" value={ville_arrivee} onChange={handleVille_arriveeChange} placeholder="Ville" />
+          <input type="text" name="arrive" onChange={handleVille_arriveeChange}  placeholder="Ville" />
             {/* <p className="gps2">{gps2[0]} {gps2[1]}</p> */}
             </div>
         
