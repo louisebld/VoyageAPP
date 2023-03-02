@@ -5,10 +5,11 @@ const initialState = {
   arrivee: "",
   gps_depart: [45.564601, 5.917781],
   gps_arrivee: [],
-  distance: 0,
+  distance: 570,
   autonomie: 0,
   tempsChargement: 0,
-  temps: 0,  
+  temps: 0,
+  
 };
 
 
