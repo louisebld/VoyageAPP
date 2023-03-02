@@ -7,7 +7,7 @@
     /* padding-bottom: 20px; */
     border-radius: 50px;
     /* height:100px; */
-    width: 70%;
+    width: 60%;
     /* align-items: center; */
     vertical-align: center;
 
@@ -35,7 +35,7 @@ label {
 .button_search{
     /* margin-top: 20px; */
     margin-bottom: 20px;
-    margin-left: 50px;
+    /* margin-left: 50px; */
     margin-right: 20px;
     padding: 10px 20px;
     border: none;

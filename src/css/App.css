@@ -11,17 +11,17 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   margin-bottom: 50px;
   background-color: #a3b18a;
-  margin: 20px;
+  /* margin: 20px; */
   padding: 20px;
   border-radius: 50px;
 }
 
 .title {
-  font-size: 48px;
+  font-size: 30px;
   /* margin-bottom: 50px; */
 }
 
