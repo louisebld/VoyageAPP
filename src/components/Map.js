@@ -82,17 +82,25 @@ function Map() {
 
     // controls.setWaypoints([gps1, L.latLng(gps2[0], gps2[1]), gps2]);
 
-    var rechargePoints = kmcharge(gps1, gps2, 500, 100)
+    // var rechargePoints = kmcharge(gps1, gps2, 500, 100)
+
+    // kmcharge(gps1, gps2, 500, 100).then((rechargePoints) => {
+    //   console.log("rechargePoints : ", rechargePoints)
+    //   rechargePoints.forEach((recharge) => {
+    //     L.marker(recharge, { icon: iconMarker }).addTo(map)
+    //   });
+    // })
+
 
 
     // var gps3 = destinationPoint(gps1[0], gps1[1], gps2[0], gps2[1], 200)
     // console.log("gps3 : ", gps3)
     // L.marker(gps3, {icon : iconMarker }).addTo(map);
 
-    console.log(rechargePoints)
-    rechargePoints.forEach((recharge) => {
-      L.marker(recharge, {icon : iconMarker}).addTo(map)
-    });
+    // console.log(rechargePoints)
+    // rechargePoints.forEach((recharge) => {
+    //   L.marker(recharge, {icon : iconMarker}).addTo(map)
+    // });
 
     map.fitBounds(bounds);
   }, [latlngs, bounds]);

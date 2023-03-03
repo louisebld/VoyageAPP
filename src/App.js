@@ -43,7 +43,7 @@ function App() {
           <StartEndComponent />        
         </div>
         <div className="container">
-          <FormTimeComponent/>
+          {/* <FormTimeComponent/> */}
 
         <div className="map" id="map">
               <Map/>
