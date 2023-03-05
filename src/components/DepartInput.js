@@ -36,7 +36,7 @@ function CityInput() {
 
   return (
     <div className="city-input-container">
-      <input type="text" className="city-input" value={ville_depart} onChange={handleInputChange} />
+      <input type="text" className="city-input" value={ville_depart} onChange={handleInputChange} placeholder="Départ"/>
       {suggestions.length > 0 && (
         <ul className="city-suggestions">
           {suggestions.map((city) => (

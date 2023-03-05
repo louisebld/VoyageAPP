@@ -13,7 +13,7 @@ import qql from 'graphql-tag';
 import { createClient, defaultExchanges } from '@urql/core';
 import { vehicleListQuery } from './services/vehiculeListService';
 import { client } from './services/vehiculeListService';
-
+import SideBar from './components/SideBar';
 const soap = require('soap-everywhere');
 // include OpenLayers
 var ol = require('openlayers');
@@ -70,6 +70,7 @@ function App() {
 
         <button>Search</button>
         </div>
+        <SideBar/>
 
       </>
       </ApolloProvider>

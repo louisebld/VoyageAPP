@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 300px;
+    height: 50vh;
+    top: 25vh;
+    padding: 10px;
+    position: fixed;
+    align-items: center;
+    text-align: center;
+    background-color: #cad2c5;
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-250px);
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.buttondiv {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.toggle-btn {
+    /* margin-left: auto; */
+
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
