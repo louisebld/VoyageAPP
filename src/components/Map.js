@@ -8,6 +8,7 @@ import L from 'leaflet';
 import 'leaflet-routing-machine';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { destinationPoint } from "../functions/destinationPoint";
+import findBorne from '../services/bornesservice'
 
 import { Icon } from 'leaflet'
 import { kmcharge } from "../functions/kmcharge";
@@ -69,20 +70,7 @@ function Map() {
 
     }).addTo(map);
 
-    // controls.hide()
-    // L.control.hide();
-
-    // ajoute les marqueurs sur la carte
-    // markers.forEach((marker) => {
-    //   console.log("ajoute un marqueur", marker)
-    //   L.marker(marker, { icon: iconMarker }).addTo(map);
-    // });
-
-    // print les points gps par lequel passe
-
-    // controls.setWaypoints([gps1, L.latLng(gps2[0], gps2[1]), gps2]);
-
-    // var rechargePoints = kmcharge(gps1, gps2, 500, 100)
+    var rechargePoints = kmcharge(gps1, gps2, 500, 100)
 
     // kmcharge(gps1, gps2, 500, 100).then((rechargePoints) => {
     //   console.log("rechargePoints : ", rechargePoints)
@@ -97,10 +85,21 @@ function Map() {
     // console.log("gps3 : ", gps3)
     // L.marker(gps3, {icon : iconMarker }).addTo(map);
 
+
+
     // console.log(rechargePoints)
-    // rechargePoints.forEach((recharge) => {
-    //   L.marker(recharge, {icon : iconMarker}).addTo(map)
-    // });
+
+    rechargePoints.forEach((recharge) => {
+      var Point = destinationPoint(gps1[0], gps1[1], gps2[0], gps2[1], recharge)
+      findBorne(Point[0], Point[1]).then((borne) => {
+        var borne = borne;
+        var coordonnes = borne["geo_point_borne"];
+
+        var marker = L.marker([coordonnes[1], coordonnes[0]], { icon: iconMarker }).addTo(map)
+        marker.bindPopup(borne["ad_station"] + " " + borne["code_insee"]);
+      })
+    });
+
 
     map.fitBounds(bounds);
   }, [latlngs, bounds]);

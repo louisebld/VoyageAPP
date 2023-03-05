@@ -22,10 +22,10 @@ function List() {
   var [data, setData] = React.useState(null);
 
   useEffect(() => {
-  client.query(vehicleListQuery, { page: 10, size: 10, search: "" }).toPromise().then((result) => {
-    console.log(result.data);
-    setData(result.data);
-  });
+  // client.query(vehicleListQuery, { page: 10, size: 10, search: "" }).toPromise().then((result) => {
+  //   console.log(result.data);
+  //   setData(result.data);
+  // });
   }, []);
 
     return (
