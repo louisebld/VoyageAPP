@@ -7,10 +7,25 @@ import findBorne from './services/bornesservice';
 import van from './assets/van.png';
 import Map from './components/Map';
 import CityInput from './components/DepartInput';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import List from './components/list';
+import qql from 'graphql-tag';
+import { createClient, defaultExchanges } from '@urql/core';
+import { vehicleListQuery } from './services/vehiculeListService';
+import { client } from './services/vehiculeListService';
 
 const soap = require('soap-everywhere');
 // include OpenLayers
 var ol = require('openlayers');
+
+
+
+// function test() {
+//   client.query(vehicleListQuery, { page: 10, size: 10, search: "" }).toPromise().then((result) => {
+//     console.log(result);
+//   });
+// }
+
 
 
 function App() {
@@ -32,6 +47,7 @@ function App() {
   }
 
   return (
+    <ApolloProvider client={client}>
     <>
       <div className="App">
         <div className="header">
@@ -49,11 +65,14 @@ function App() {
               <Map/>
           </div>
           </div>
-        <p>{borneDepart}</p>
-        <button onClick={callBorne}>Search</button>
-      </div>
-    </>
-      
+          <p>{borneDepart}</p>
+          <List/>
+
+        <button>Search</button>
+        </div>
+
+      </>
+      </ApolloProvider>
     
   );
 }
