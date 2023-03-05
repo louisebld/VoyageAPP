@@ -17,7 +17,10 @@ var greenIcon = new Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
     iconSize: [25, 41],
     iconAnchor: [12,41]
-  })
+})
+  
+var map = null;
+
 
 function Map() {
   // const position = [51.505, -0.09]
@@ -37,12 +40,15 @@ function Map() {
 
   useEffect(() => {
 
-      var container = L.DomUtil.get('map');
-        if(container != null){
-          container._leaflet_id = null;
-      }
-      
-      var map = L.map("map", {
+      // var container = L.DomUtil.get('map');
+      //   if(container != null){
+      //     container._leaflet_id = null;
+      // }
+
+      if (map !== undefined && map !== null) { map.remove(); }
+  
+    
+      map = L.map("map", {
         center: center,
         zoom: zoom,
         zoomControl: false,
