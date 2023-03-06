@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/SideBar.css";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx'
+import Carrousel from "./Carrousel";
 
 
 const CollapsibleSidebar = () => {
@@ -22,6 +23,7 @@ const CollapsibleSidebar = () => {
       </button>
         </div>
         <h2>Véhicule</h2>
+        <Carrousel/>
       </div>
     </div>
     
