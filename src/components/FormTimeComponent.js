@@ -1,8 +1,10 @@
 import React from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setDistance, setAutonomie, setTempsChargement, setTemps } from "../store/datas";
 import sendSoapRequest from '../services/soapservice';
 import '../css/FormTimeComponent.css'
+import coutCalcul from '../services/coutService';
 var soap = require('soap-everywhere');
 
 
@@ -13,7 +15,17 @@ function FormTimeComponent() {
     var distance = useSelector((state) => state.datas.distance);
     var autonomie = useSelector((state) => state.datas.autonomie);
     var tempsChargement = useSelector((state) => state.datas.tempsChargement);
-    var temps = useSelector((state) => state.datas.temps);
+  var temps = useSelector((state) => state.datas.temps);
+  
+  var [cout, setCout] = useState(0);
+  
+  const callAPI = () => {
+    fetch('http://localhost:8081/calculer-cout/' + distance).then(response => {
+        return response.json();
+    }).then(data => {
+        setCout(data.cout)
+    });
+  }
   
 
   const callSoap = () => {
@@ -51,7 +63,12 @@ function FormTimeComponent() {
             </form>
           <div className="divtemps">
           <p>Temps de voyage : {formatTemps(temps)}</p>
-            </div>
+          <button type="button" onClick={callAPI}>Calculer</button>
+          <p>Cout du voyage : {cout}€</p>
+        </div>
+
+        
+
         </div>
     );
     }

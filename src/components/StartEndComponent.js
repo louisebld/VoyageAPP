@@ -95,7 +95,7 @@ function StartEndComponent() {
         <ArriveInput/>
       
       </div>
-            <button onClick={chercher} className="button_search">Chercher</button>
+            <button onClick={chercher}>Chercher</button>
 
         
         </div>

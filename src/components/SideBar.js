@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../css/SideBar.css";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx'
 import Carrousel from "./Carrousel";
+import FormTimeComponent from "./FormTimeComponent";
 
 
 const CollapsibleSidebar = () => {
@@ -23,7 +24,10 @@ const CollapsibleSidebar = () => {
       </button>
         </div>
         <h2>Véhicule</h2>
-        <Carrousel/>
+        <Carrousel />
+        <div className="formtime">
+          <FormTimeComponent />
+        </div>
       </div>
     </div>
     

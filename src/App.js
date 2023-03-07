@@ -59,19 +59,18 @@ function App() {
           <StartEndComponent />        
         </div>
         <div className="container">
-          {/* <FormTimeComponent/> */}
 
         <div className="map" id="map">
               <Map/>
-          </div>
-          </div>
-          <p>{borneDepart}</p>
-          <List/>
+            </div>
 
-        <button>Search</button>
+          </div>
+          {/* <p>{borneDepart}</p> */}
+          {/* <List/> */}
+
+        {/* <button>Search</button> */}
         </div>
-        <SideBar/>
-
+        <SideBar />
       </>
       </ApolloProvider>
     
