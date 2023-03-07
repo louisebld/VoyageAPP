@@ -9,6 +9,8 @@ import 'leaflet-routing-machine';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { destinationPoint } from "../functions/destinationPoint";
 import findBorne from '../services/bornesservice'
+import qql from 'graphql-tag';
+import { createClient, defaultExchanges } from '@urql/core';
 
 import { Icon } from 'leaflet'
 import { kmcharge } from "../functions/kmcharge";
@@ -20,6 +22,46 @@ var greenIcon = new Icon({
 })
   
 var map = null;
+
+export const headers = {
+  'x-client-id': '6402f92d85c5c3f0221ae397',
+  'x-app-id': '6402f92d85c5c3f0221ae399'
+};
+
+
+export const client = createClient({
+  url: 'https://api.chargetrip.io/graphql',
+  fetchOptions: {
+    method: 'POST',
+    headers,
+  },
+  exchanges: [...defaultExchanges],
+});
+
+const chargingStationQuery = qql`
+    query stationAround ($lat: Float!, $lng: Float!) {
+        stationAround(
+            filter: {
+                location: { 
+                    type: Point,
+                    coordinates: [$lng, $lat]
+                }
+                distance: 10000
+            }
+            size: 10
+            page: 0
+        ) {
+            location {
+                type
+                coordinates
+            }
+            power
+            speed
+            status
+            }
+        }
+    `;
+
 
 
 function Map() {
@@ -38,7 +80,31 @@ function Map() {
   const [latlngs, setLatlngs] = useState([gps1, gps2]); // tableau des points à relier
   const bounds = [gps1, gps2];
 
+  function calculIndiceCoordonnees(indiceMax, distancetotale, autonomie) {
+    var indiceMax = 10184;
+    var distancetotale = 1000;
+    // var indice = Math.round((autonomie / distancetotale) * indiceMax);
+    
+    var indices = [];
+    var nbRecharge = Math.round(distancetotale / autonomie);
+    for (var i = 0; i < nbRecharge; i++) {
+      var indiceRecharge = Math.round((i * autonomie / distancetotale) * indiceMax);
+      indices.push(indiceRecharge);
+    }
+
+    return indices;
+  }
+
+  // function askBorne(lat, lng) {
+  //   client.query(chargingStationQuery, { lat, lng }).toPromise().then((result) => {
+  //     console.log(result);
+  //   });
+
+
   useEffect(() => {
+
+    console.log("bjr")
+    console.log(calculIndiceCoordonnees(11400, 1000, 200));
 
       // var container = L.DomUtil.get('map');
       //   if(container != null){
@@ -80,38 +146,49 @@ function Map() {
       var routes = e.routes;
       console.log("routes", routes)
       var summary = routes[0].summary;
-      console.log(summary.totalDistance)
-    });
+      var distanceTotale = summary.totalDistance;
+      var indiceMax = routes[0].coordinates.length;
+      var indicesPoint = calculIndiceCoordonnees(indiceMax, distanceTotale, 500);
+      // console.log("points", points)
+      console.log("points", indicesPoint)
 
-    var rechargePoints = kmcharge(gps1, gps2, 500, 100)
+      indicesPoint.forEach((indice) => {
+        var point = routes[0].coordinates[indice];
+        console.log("point", point)
+        
+        // var marker = L.marker([point.lat, point.lng], { icon: iconMarker }).addTo(map)
+        // findBorne(point.lat, point.lng).then((borne) => {
+        //   var borne = borne;
+        //   var coordonnes = borne["geo_point_borne"];
 
-    // kmcharge(gps1, gps2, 500, 100).then((rechargePoints) => {
-    //   console.log("rechargePoints : ", rechargePoints)
-    //   rechargePoints.forEach((recharge) => {
-    //     L.marker(recharge, { icon: iconMarker }).addTo(map)
-    //   });
-    // })
+        //   var marker = L.marker([coordonnes[1], coordonnes[0]], { icon: iconMarker }).addTo(map)
+        //   marker.bindPopup(borne["ad_station"] + " " + borne["code_insee"]);
+        // })
 
+        var lat = point.lat;
+        var lng = point.lng;
+        // client.query(chargingStationQuery, { lat, lng }).toPromise().then((result) => {
+        //   console.log("result", result)
+        //   console.log(result.data.stationAround[0].location.coordinates);
+        //   var marker = L.marker([result.data.stationAround[0].location.coordinates[1], result.data.stationAround[0].location.coordinates[0]], { icon: iconMarker }).addTo(map)
+        // });
+        
 
-
-    // var gps3 = destinationPoint(gps1[0], gps1[1], gps2[0], gps2[1], 200)
-    // console.log("gps3 : ", gps3)
-    // L.marker(gps3, {icon : iconMarker }).addTo(map);
-
-
-
-    // console.log(rechargePoints)
-
-    rechargePoints.forEach((recharge) => {
-      var Point = destinationPoint(gps1[0], gps1[1], gps2[0], gps2[1], recharge)
-      findBorne(Point[0], Point[1]).then((borne) => {
-        var borne = borne;
-        var coordonnes = borne["geo_point_borne"];
-
-        var marker = L.marker([coordonnes[1], coordonnes[0]], { icon: iconMarker }).addTo(map)
-        marker.bindPopup(borne["ad_station"] + " " + borne["code_insee"]);
       })
     });
+
+    // var rechargePoints = kmcharge(gps1, gps2, 500, 100)
+
+    // rechargePoints.forEach((recharge) => {
+    //   var Point = destinationPoint(gps1[0], gps1[1], gps2[0], gps2[1], recharge)
+    //   findBorne(Point[0], Point[1]).then((borne) => {
+    //     var borne = borne;
+    //     var coordonnes = borne["geo_point_borne"];
+
+    //     var marker = L.marker([coordonnes[1], coordonnes[0]], { icon: iconMarker }).addTo(map)
+    //     marker.bindPopup(borne["ad_station"] + " " + borne["code_insee"]);
+    //   })
+    // });
 
 
     map.fitBounds(bounds);
