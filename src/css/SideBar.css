@@ -4,13 +4,15 @@
 
 .sidebar {
     width: 300px;
-    height: 50vh;
-    top: 25vh;
+    height: 90vh;
+    top: 3vh;
     padding: 10px;
     position: fixed;
     align-items: center;
     text-align: center;
-    background: linear-gradient(#41D8DD, #5583EE);
+    /* background: linear-gradient(#e66465, #9198e5); */
+    /* background: linear-gradient(#41D8DD, #5583EE); */
+    background: linear-gradient(#5583EE, #41D8DD);
     transition: all 0.3s ease-in-out;
     transform: translateX(-250px);
     z-index: 999;
@@ -33,4 +35,8 @@
     color: #fff;
     border: none;
     cursor: pointer;
+}
+
+.formtime{
+    padding-top:100px;
 }
