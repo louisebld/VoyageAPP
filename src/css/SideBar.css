@@ -10,7 +10,7 @@
     position: fixed;
     align-items: center;
     text-align: center;
-    background-color: #219ebc;
+    background: linear-gradient(#41D8DD, #5583EE);
     transition: all 0.3s ease-in-out;
     transform: translateX(-250px);
     z-index: 999;
