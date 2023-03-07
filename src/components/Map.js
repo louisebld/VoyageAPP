@@ -76,6 +76,13 @@ function Map() {
 
     }).addTo(map);
 
+    controls.on('routesfound', function (e) {
+      var routes = e.routes;
+      console.log("routes", routes)
+      var summary = routes[0].summary;
+      console.log(summary.totalDistance)
+    });
+
     var rechargePoints = kmcharge(gps1, gps2, 500, 100)
 
     // kmcharge(gps1, gps2, 500, 100).then((rechargePoints) => {
