@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  zoom: 10,
+  zoom: 5,
   center: [51.505, -0.09],
-  depart: [45.564601, 5.917781],
-  arrivee: [48.866667, 2.333333],
+  depart: [],
+  arrivee: [],
   bounds: [[45.564601, 5.917781], [51.507, -0.12]],
   rechargePoints :[],
   markers: [],

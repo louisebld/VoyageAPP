@@ -103,14 +103,6 @@ function Map() {
 
   useEffect(() => {
 
-    console.log("bjr")
-    console.log(calculIndiceCoordonnees(11400, 1000, 200));
-
-      // var container = L.DomUtil.get('map');
-      //   if(container != null){
-      //     container._leaflet_id = null;
-      // }
-
       if (map !== undefined && map !== null) { map.remove(); }
   
     
@@ -142,6 +134,8 @@ function Map() {
 
     }).addTo(map);
 
+
+
     controls.on('routesfound', function (e) {
       var routes = e.routes;
       console.log("routes", routes)
@@ -172,6 +166,10 @@ function Map() {
         //   console.log(result.data.stationAround[0].location.coordinates);
         //   var marker = L.marker([result.data.stationAround[0].location.coordinates[1], result.data.stationAround[0].location.coordinates[0]], { icon: iconMarker }).addTo(map)
         // });
+
+          let waypoints = controls.getWaypoints();
+          waypoints.splice(1, 0, L.latLng(46.5, -0.1));
+          controls.setWaypoints(waypoints);
         
 
       })
@@ -191,7 +189,11 @@ function Map() {
     // });
 
 
-    map.fitBounds(bounds);
+    if (bounds[0].length > 0)
+    {
+      map.fitBounds(bounds);
+      }
+    // map.fitBounds(bounds);
   }, [latlngs, bounds]);
 
   return (
