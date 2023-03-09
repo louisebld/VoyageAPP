@@ -1,7 +1,7 @@
 form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
@@ -17,6 +17,11 @@ label {
 
 .divform {
     /* display: inline-block; */
-    /* width: 30%; */
-    vertical-align: top;
+    /* vertical-align: top; */
+    height: 100%;
+}
+
+.formtime {
+    align-items: center;
+    text-align: center;
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
+import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../../store/datas";
 
-import '../css/InputComponent.css';
-import askGPSVille from '../services/gpsservice';
+import '../../css/InputComponent.css';
+import askGPSVille from '../../services/gpsservice';
 
 function CityInput() {
 
@@ -35,7 +35,8 @@ function CityInput() {
   }
 
   return (
-    <div className="city-input-container">
+    <>
+    {/* <div className="city-input-container"> */}
       <input type="text" className="city-input" value={ville_depart} onChange={handleInputChange} placeholder="Départ"/>
       {suggestions.length > 0 && (
         <ul className="city-suggestions">
@@ -46,7 +47,8 @@ function CityInput() {
           ))}
         </ul>
       )}
-    </div>
+      {/* </div> */}
+      </>
   );
 }
 

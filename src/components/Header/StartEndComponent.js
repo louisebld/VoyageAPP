@@ -1,14 +1,16 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import askGPSVille from "../services/gpsservice";
+import askGPSVille from "../../services/gpsservice";
 import { MdPlace } from 'react-icons/md';
-import {HiOutlineSwitchHorizontal} from 'react-icons/hi';
-import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
-import {addMarker, setBounds, setDepart, setArrive} from '../store/map';
+import { HiOutlineSwitchHorizontal } from 'react-icons/hi';
+import { TbMapSearch } from 'react-icons/tb';
+import {FcSearch} from 'react-icons/fc';
+import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../../store/datas";
+import {addMarker, setBounds, setDepart, setArrive} from '../../store/map';
 import L from 'leaflet';
 import DepartInput from "./DepartInput";
 import ArriveInput from "./ArriveInput";
-import '../css/StartEndComponent.css'
+import '../../css/StartEndComponent.css';
 function StartEndComponent() {
 
     var ville_depart = useSelector((state) => state.datas.depart);
@@ -79,23 +81,23 @@ function StartEndComponent() {
   
   return (
     <div className="destination">
-      <div className="depart">
+      {/* <div className="depart"> */}
                 {/* <MdPlace/> */}
         {/* <label>Départ</label> */}
         {/* <input type="text" name="depart" onChange={handleVille_departChange} placeholder="Ville" /> */}
           <DepartInput/>
               {/* <p className="gps1">{gps1[0]} {gps1[1]}</p> */}
-          </div>
-          <div className="switch">
+          {/* </div> */}
+          {/* <div className="switch"> */}
             <button type="button" onClick={switchVilles}><HiOutlineSwitchHorizontal/></button>
-          </div>
-          <div className="arrive">
+          {/* </div> */}
+          {/* <div className="arrive"> */}
             {/* <label>Arrivée </label> */}
         {/* <input type="text" name="arrive" onChange={handleVille_arriveeChange}  placeholder="Ville" /> */}
         <ArriveInput/>
       
-      </div>
-            <button onClick={chercher}>Chercher</button>
+      {/* </div> */}
+            <button onClick={chercher}><FcSearch/></button>
 
         
         </div>

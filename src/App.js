@@ -1,19 +1,18 @@
 import './css/App.css';
 import React, { useState } from 'react';
 import {useSelector, useDispatch } from 'react-redux';
-import StartEndComponent from './components/StartEndComponent';
-import FormTimeComponent from './components/FormTimeComponent';
+import StartEndComponent from './components/Header/StartEndComponent';
 import findBorne from './services/bornesservice';
-import van from './assets/van.png';
 import Map from './components/Map';
-import CityInput from './components/DepartInput';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import List from './components/list';
 import qql from 'graphql-tag';
 import { createClient, defaultExchanges } from '@urql/core';
 import { vehicleListQuery } from './services/vehiculeListService';
 import { client } from './services/vehiculeListService';
-import SideBar from './components/SideBar';
+import SideBar from './components/SideBar/SideBar';
+import Header from "./components/Header/Header"
+// import Nav from './components/Nav';
 const soap = require('soap-everywhere');
 // include OpenLayers
 var ol = require('openlayers');
@@ -48,16 +47,9 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-    <>
-      <div className="App">
-        <div className="header">
-        <div className="titleGroup">
-          <img className="van" src={van} alt="placeholder" />
-          <h1 className="title">PLANIFIE TON VOYAGE</h1>
-        </div>
-        {/* <p className="parag">Planifie ton voyage</p> */}
-          <StartEndComponent />        
-        </div>
+      <>
+        <div className="App">
+          <Header/>
         <div className="container">
 
         <div className="map" id="map">

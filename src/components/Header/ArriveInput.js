@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../store/datas";
-import askGPSVille from '../services/gpsservice';
-import '../css/InputComponent.css';
+import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../../store/datas";
+import askGPSVille from '../../services/gpsservice';
+import '../../css/InputComponent.css';
 import _ from 'lodash';
 import { debounce } from 'lodash';
 
@@ -63,7 +63,8 @@ function CityInput() {
   }
 
   return (
-    <div className="city-input-container">
+    <>
+    {/* <div className="city-input-container"> */}
       <input type="text" className="city-input" value={ville_arrivee} onChange={handleInputChange} placeholder="Arrivée"/>
       {suggestions.length > 0 && (
         <ul className="city-suggestions">
@@ -74,7 +75,9 @@ function CityInput() {
           ))}
         </ul>
       )}
-    </div>
+      
+      {/* </div> */}
+      </>
   );
 }
 

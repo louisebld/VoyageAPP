@@ -3,9 +3,9 @@
 }
 
 .sidebar {
-    width: 300px;
-    height: 90vh;
-    top: 3vh;
+    width:250px;
+    height: 80vh;
+    top: 15vh;
     padding: 10px;
     position: fixed;
     align-items: center;
@@ -14,7 +14,7 @@
     /* background: linear-gradient(#41D8DD, #5583EE); */
     background: linear-gradient(#5583EE, #41D8DD);
     transition: all 0.3s ease-in-out;
-    transform: translateX(-250px);
+    transform: translateX(-200px);
     z-index: 999;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -35,8 +35,4 @@
     color: #fff;
     border: none;
     cursor: pointer;
-}
-
-.formtime{
-    padding-top:100px;
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setDistance, setAutonomie, setTempsChargement, setTemps } from "../store/datas";
-import sendSoapRequest from '../services/soapservice';
-import '../css/FormTimeComponent.css'
-import coutCalcul from '../services/coutService';
+import { setDistance, setAutonomie, setTempsChargement, setTemps } from "../../store/datas";
+import sendSoapRequest from '../../services/soapservice';
+import '../../css/FormTimeComponent.css'
+import coutCalcul from '../../services/coutService';
 var soap = require('soap-everywhere');
 
 

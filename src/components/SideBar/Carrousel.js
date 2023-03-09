@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
-import "../css/Carrousel.css";
-import {vehiculeList} from '../assets/vehiculelist.js'
+import "../../css/Carrousel.css";
+import {vehiculeList} from '../../assets/vehiculelist.js'
 
 const Carrousel = () => {
 
