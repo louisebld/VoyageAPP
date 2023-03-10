@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 /Soap/node_modules
-
+/api/node_modules
 # testing
 /coverage
 
