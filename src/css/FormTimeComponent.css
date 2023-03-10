@@ -6,12 +6,11 @@ form {
 }
 
 label {
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 1rem;
 }
 
 .divtemps {
-    font-size: 24px;
+    font-size: 1rem;
     font-weight: bold;
 }
 
@@ -24,4 +23,12 @@ label {
 .formtime {
     align-items: center;
     text-align: center;
+}
+
+input {
+    /* margin: 0.5rem; */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    /* font-size: 1rem; */
 }
