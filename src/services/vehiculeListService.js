@@ -34,6 +34,11 @@ query vehicleList($page: Int, $size: Int, $search: String) {
         thumbnail_url
       }
     }
+    battery {
+      usable_kwh
+      full_kwh
+    }
+
   }
 }
 `;

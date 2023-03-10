@@ -62,10 +62,10 @@ function FormTimeComponent() {
           <button type="button" onClick={callSoap}>Calculer</button>
             </form>
           <div className="divtemps">
-          <p>Temps de voyage : {formatTemps(temps)}</p>
-          <button type="button" onClick={callAPI}>Calculer</button>
-          <p>Cout du voyage : {cout}€</p>
-        </div>
+            <p>Temps : {formatTemps(temps)}</p>
+            <button type="button" onClick={callAPI}>Calculer</button>
+            <p>Coût : {cout}€</p>
+          </div>
 
         
 
