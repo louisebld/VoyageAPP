@@ -81,11 +81,9 @@ function Map() {
   const bounds = [gps1, gps2];
 
   function calculIndiceCoordonnees(indiceMax, distancetotale, autonomie) {
-    var indiceMax = 10184;
-    var distancetotale = 1000;
-    // var indice = Math.round((autonomie / distancetotale) * indiceMax);
     
     var indices = [];
+    distancetotale = distancetotale/1000;
     var nbRecharge = Math.round(distancetotale / autonomie);
     for (var i = 0; i < nbRecharge; i++) {
       var indiceRecharge = Math.round((i * autonomie / distancetotale) * indiceMax);
@@ -141,35 +139,36 @@ function Map() {
       console.log("routes", routes)
       var summary = routes[0].summary;
       var distanceTotale = summary.totalDistance;
-      var indiceMax = routes[0].coordinates.length;
-      var indicesPoint = calculIndiceCoordonnees(indiceMax, distanceTotale, 500);
-      // console.log("points", points)
-      console.log("points", indicesPoint)
+      var indiceMax = routes[0].waypointIndices[1];
+      console.log("indiceMax", indiceMax)
+      console.log("distanceTotale", distanceTotale)
+      var indicesPoint = calculIndiceCoordonnees(indiceMax, distanceTotale, 50);
 
+      let waypoints = controls.getWaypoints();
+      console.log("indice", indicesPoint)
+
+      // inverse le tableau pour avoir les points de recharge dans le bon ordre
+      indicesPoint = indicesPoint.reverse();
+
+      console.log("indice", indicesPoint)
       indicesPoint.forEach((indice) => {
         var point = routes[0].coordinates[indice];
-        console.log("point", point)
+        // console.log("point", point)
         
-        // var marker = L.marker([point.lat, point.lng], { icon: iconMarker }).addTo(map)
-        // findBorne(point.lat, point.lng).then((borne) => {
-        //   var borne = borne;
-        //   var coordonnes = borne["geo_point_borne"];
-
-        //   var marker = L.marker([coordonnes[1], coordonnes[0]], { icon: iconMarker }).addTo(map)
-        //   marker.bindPopup(borne["ad_station"] + " " + borne["code_insee"]);
-        // })
-
         var lat = point.lat;
         var lng = point.lng;
-        // client.query(chargingStationQuery, { lat, lng }).toPromise().then((result) => {
-        //   console.log("result", result)
-        //   console.log(result.data.stationAround[0].location.coordinates);
-        //   var marker = L.marker([result.data.stationAround[0].location.coordinates[1], result.data.stationAround[0].location.coordinates[0]], { icon: iconMarker }).addTo(map)
-        // });
-
-          let waypoints = controls.getWaypoints();
-          waypoints.splice(1, 0, L.latLng(46.5, -0.1));
+        
+        client.query(chargingStationQuery, { lat, lng }).toPromise().then((result) => {
+            // add waypoint
+          var waypoint = L.latLng(result.data.stationAround[0].location.coordinates[1], result.data.stationAround[0].location.coordinates[0]);
+          waypoints.splice(1, 0, waypoint);
           controls.setWaypoints(waypoints);
+          // var marker = L.marker([result.data.stationAround[0].location.coordinates[1], result.data.stationAround[0].location.coordinates[0]], { icon: iconMarker }).addTo(map)
+        });
+
+
+          // waypoints.splice(1, 0, L.latLng(46.5, -0.1));
+          // controls.setWaypoints(waypoints);
         
 
       })
