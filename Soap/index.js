@@ -31,9 +31,11 @@ const service = {
 	},
 };
 
-var xml = require('fs').readFileSync('./Soap/monservice.wsdl', 'utf8');
+var xml = require('fs').readFileSync('./service.wsdl', 'utf8');
 soap.listen(app, '/distance', service, xml);
 
 app.listen(8080, () => {
 	console.log("Server is listening on port 8080");
 });
+
+module.exports = app;

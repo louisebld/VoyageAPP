@@ -1,7 +1,7 @@
-<definitions name="DistanceService" targetNamespace="http://localhost:8080/distance?wsdl" 
+<definitions name="DistanceService" targetNamespace="https://soap-louisebld.vercel.app/distance?wsdl" 
   xmlns="http://schemas.xmlsoap.org/wsdl/" 
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-  xmlns:tns="http://localhost:8080/distance?wsdl" 
+  xmlns:tns="https://soap-louisebld.vercel.app/distance?wsdl" 
   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <message name="distance">
@@ -37,7 +37,7 @@
   <service name="DistanceService">
     <documentation>WSDL File for HelloService</documentation>
     <port binding="tns:DistanceServiceSoapPort" name="DistanceServiceSoapPort">
-      <soap:address location="http://localhost:8080/distance?wsdl" />
+      <soap:address location="https://soap-louisebld.vercel.app/distance?wsdl" />
     </port>
   </service>
 </definitions>

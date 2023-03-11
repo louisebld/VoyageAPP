@@ -3,6 +3,9 @@ const app = express()
 var cors = require('cors');
 app.use(cors());
 
+app.get('/', (req, res) => {
+    res.send('Api calcul du cout !')
+})
 
 app.get('/calculer-cout/:km', (req, res) => {
     console.log(req.params.km)
@@ -14,3 +17,5 @@ app.get('/calculer-cout/:km', (req, res) => {
 app.listen(8081, () => {
     console.log('Example app listening on port 8081!')
 })
+
+module.exports = app;

@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+            "service.wsdl"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/distance",
+      "dest": "/index.js"
+    }
+  ]
+}
