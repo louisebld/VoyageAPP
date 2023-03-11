@@ -10,40 +10,19 @@ function CityInput() {
 
     const dispatch = useDispatch();
     var ville_arrivee = useSelector((state) => state.datas.arrivee);
-    const [searchRequest, setSearchRequest] = useState(null);
-    let searchTimer = null;
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const [typingTimeout, setTypingTimeout] = useState(0);
 
   
   const [suggestions, setSuggestions] = useState([]);
 
 
-  // async function handleInputChange(event) {
-  //   const value = event.target.value;
-  //   dispatch(setVille_arrivee(value));
-
-  //   if (searchRequest) {
-  //     searchRequest.cancel();
-  //   }
-    
-  //   const request = _.debounce(search, 2000);
-  //   setSearchRequest(request);
-  //   request();
-
-  // }
-
-  const handleInputChange = (event) => {
+  async function handleInputChange(event) {
     const value = event.target.value;
     dispatch(setVille_arrivee(value));
 
-    // On utilise un timer pour attendre un délai de 500ms avant d'envoyer la requête
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(search, 2000);
-  };
-  
-
-  const search = () => {
-    console.log("passe ici")
-    askGPSVille(ville_arrivee).then((data) => {
+    askGPSVille(value).then((data) => {
       console.log("data", data)
       const citySuggestions = data.map((city) => ({
         name: city.display_name,
@@ -58,16 +37,24 @@ function CityInput() {
   function handleSuggestionClick(city) {
       dispatch(setVille_arrivee(city.name));
       dispatch(setGps_arrivee([city.lat, city.lon]));
-      
     setSuggestions([]);
   }
+
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    clearTimeout(typingTimeout);
+    setTypingTimeout(setTimeout(() => {
+      handleInputChange(event);
+    }, 600));
+  setSearchTerm(value);
+};
 
   return (
     <>
     {/* <div className="city-input-container"> */}
-      <input type="text" className="city-input" value={ville_arrivee} onChange={handleInputChange} placeholder="Arrivée"/>
+      <input type="text" className="city-input" value={searchTerm} onChange={handleSearchInputChange} placeholder="Arrivée"/>
       {suggestions.length > 0 && (
-        <ul className="city-suggestions">
+        <ul className="city-suggestions-arrive">
           {suggestions.map((city) => (
             <li key={city.name} className="city-suggestion" onClick={() => handleSuggestionClick(city)}>
               {city.name}

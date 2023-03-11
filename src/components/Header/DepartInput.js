@@ -6,13 +6,14 @@ import '../../css/InputComponent.css';
 import askGPSVille from '../../services/gpsservice';
 
 function CityInput() {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [typingTimeout, setTypingTimeout] = useState(0);
 
     const dispatch = useDispatch();
     var ville_depart = useSelector((state) => state.datas.depart);
     const [suggestions, setSuggestions] = useState([]);
 
   async function handleInputChange(event) {
-
     const value = event.target.value;
     dispatch(setVille_depart(value));
 
@@ -34,10 +35,20 @@ function CityInput() {
     setSuggestions([]);
   }
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    clearTimeout(typingTimeout);
+    setTypingTimeout(setTimeout(() => {
+      handleInputChange(event);
+    }, 600));
+  setSearchTerm(value);
+};
+
+
   return (
     <>
     {/* <div className="city-input-container"> */}
-      <input type="text" className="city-input" value={ville_depart} onChange={handleInputChange} placeholder="Départ"/>
+      <input type="text" className="city-input" value={searchTerm} onChange={handleSearchInputChange} placeholder="Départ"/>
       {suggestions.length > 0 && (
         <ul className="city-suggestions">
           {suggestions.map((city) => (

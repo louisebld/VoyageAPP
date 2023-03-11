@@ -11,6 +11,7 @@ import L from 'leaflet';
 import DepartInput from "./DepartInput";
 import ArriveInput from "./ArriveInput";
 import '../../css/StartEndComponent.css';
+import { calculDistance } from "../../functions/calculDistance";
 function StartEndComponent() {
 
     var ville_depart = useSelector((state) => state.datas.depart);
@@ -46,30 +47,18 @@ function StartEndComponent() {
     // dispatch(setDistance(calculDistance()));
   }
 
-  function calculDistance() {
+  function distance() {
     var lat1 = gps1[0];
     var lon1 = gps1[1];
     var lat2 = gps2[0];
     var lon2 = gps2[1];
 
-    const R = 6371; // Rayon de la terre en km
-    const dLat = ((lat2 - lat1) * Math.PI) / 180;
-    const dLon = ((lon2 - lon1) * Math.PI) / 180;
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var distance = R * c;
-    distance = Math.round(distance * 100) / 100;
-    return distance;
+    calculDistance(lat1, lon1, lat2, lon2)
   }
 
   function chercher() {
 
-    dispatch(setDistance(calculDistance()));
+    dispatch(setDistance(distance()));
     dispatch(setDepart(gps1))
     dispatch(setArrive(gps2))
 
@@ -81,22 +70,9 @@ function StartEndComponent() {
   
   return (
     <div className="destination">
-      {/* <div className="depart"> */}
-                {/* <MdPlace/> */}
-        {/* <label>Départ</label> */}
-        {/* <input type="text" name="depart" onChange={handleVille_departChange} placeholder="Ville" /> */}
           <DepartInput/>
-              {/* <p className="gps1">{gps1[0]} {gps1[1]}</p> */}
-          {/* </div> */}
-          {/* <div className="switch"> */}
             <button type="button" onClick={switchVilles}><HiOutlineSwitchHorizontal/></button>
-          {/* </div> */}
-          {/* <div className="arrive"> */}
-            {/* <label>Arrivée </label> */}
-        {/* <input type="text" name="arrive" onChange={handleVille_arriveeChange}  placeholder="Ville" /> */}
         <ArriveInput/>
-      
-      {/* </div> */}
             <button onClick={chercher}><FcSearch/></button>
 
         
