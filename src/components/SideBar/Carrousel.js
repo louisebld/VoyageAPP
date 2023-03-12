@@ -106,11 +106,11 @@ const Carrousel = () => {
         </div>
         </div>
         <img className="img_carrousel" src={cars[currentCarIndex].media.image.thumbnail_url} alt="car" />
-        <div>
+        <div className="arrow">
             <FaArrowAltCircleLeft onClick={goToPreviousCar} className="icon"/>
         <FaArrowAltCircleRight onClick={goToNextCar} className="icon" />
+                <button onClick={choisirVehicule}>Choisir</button>
         </div>
-        <button onClick={choisirVehicule}>Choisir</button>
 
     </div>
 );

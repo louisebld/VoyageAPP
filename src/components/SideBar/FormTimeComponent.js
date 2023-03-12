@@ -48,18 +48,18 @@ function FormTimeComponent() {
     return (
         <div className="divform">
             <form>
-          <label>Distance </label>
           <div className="divInput">
+            <p className="text bold">Distance </p>
             <input type="number" name="distance" value={distance} onChange={handleDistanceChange} placeholder="km" />
             <p className="text">km.</p>
             </div>
-          <label>Autonomie</label>
           <div className="divInput">
+            <p className="text bold">Autonomie</p>
             <input type="number" name="autonomie" value={autonomie} onChange={handleAutonomieChange} placeholder="km" />
             <p className="text">km.</p>
             </div>
-          <label>Chargement</label>
           <div className="divInput">
+          <p className="text bold">Chargement</p>
           <input type="number" name="chargement" value={tempsChargement} onChange={handleTempsChargementChange} placeholder="min." />
             <p className="text">mn.</p>
             </div>

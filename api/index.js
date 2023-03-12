@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
     res.send('Api calcul du cout !')
 })
 
-app.get('/calculer-cout/:km', (req, res) => {
+app.get('/cout/:km', (req, res) => {
     console.log(req.params.km)
     var km = req.params.km;
     var cout = km * 0.25;
