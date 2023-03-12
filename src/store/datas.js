@@ -5,10 +5,11 @@ const initialState = {
   arrivee: "",
   gps_depart: [45.564601, 5.917781],
   gps_arrivee: [],
-  distance: 570,
-  autonomie: 0,
+  distance: 0,
+  autonomie: 100,
   tempsChargement: 0,
   temps: 0,
+  cout: 0,
   
 };
 
@@ -47,13 +48,16 @@ export const datasSlice = createSlice({
     },
     setTemps: (state, action) => {
       state.temps = action.payload;
+    },
+    setCout: (state, action) => {
+      state.cout = action.payload;
     }
     ,
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance, setAutonomie, setTempsChargement, setTemps } =
+export const { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance, setAutonomie, setTempsChargement, setTemps, setCout } =
   datasSlice.actions;
 
 export default datasSlice.reducer;

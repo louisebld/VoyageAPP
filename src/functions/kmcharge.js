@@ -1,4 +1,4 @@
-import findBorne from "../services/bornesservice";
+import findBorne from "../services/bornesService";
 import { destinationPoint } from "./destinationPoint";
 
 export const kmcharge = (gps1, gps2, distanceTotale, autonomie) => {

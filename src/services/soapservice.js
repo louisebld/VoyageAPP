@@ -3,7 +3,7 @@ var soap = require('soap-everywhere');
 
 function sendSoapRequest(distance, autonomie, tempsChargement) {
   return new Promise((resolve, reject) => {
-    soap.createClient('http://127.0.0.1:8080/distance?wsdl', function (err, client) {
+    soap.createClient('https://soap-louisebld.vercel.app/distance?wsdl', function (err, client) {
       if (err) {
         reject(err);
         return;
@@ -15,7 +15,7 @@ function sendSoapRequest(distance, autonomie, tempsChargement) {
         }
           var temps = result.temps * 60;
           temps = Math.round(temps);
-        resolve(temps);
+          resolve(temps);
       });
     });
   });

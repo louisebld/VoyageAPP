@@ -34,6 +34,15 @@ query vehicleList($page: Int, $size: Int, $search: String) {
         thumbnail_url
       }
     }
+    connectors {
+      time
+    }
+    range {
+      chargetrip_range {
+        best
+        worst
+      }
+    }
     battery {
       usable_kwh
       full_kwh

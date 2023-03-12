@@ -10,8 +10,10 @@ label {
 }
 
 .divtemps {
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: bold;
+    background-color: #5583EE;
+    border-radius: 5px;
 }
 
 .divform {
@@ -31,4 +33,16 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
     /* font-size: 1rem; */
+    width: 50px;
+    text-align: center;
+}
+
+.divInput {
+    display: flex;
+    align-items: center;
+}
+
+.text{
+    margin-top: 0;
+    margin-left: 0.5rem;
 }

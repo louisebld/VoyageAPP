@@ -1,7 +1,7 @@
 function coutCalcul(km) {
-    new Promise((resolve, reject) => {
-        fetch('http://localhost:8081/calculer-cout/' + km).then(response => {
-            return response.json()
+    return new Promise((resolve, reject) => {
+        fetch('https://api-louisebld.vercel.app/calculer-cout/' + km).then(response => response.json()).then(data => {
+            resolve(data.cout)
         });
     });
 }

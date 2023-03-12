@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setVille_depart, setVille_arrivee, setGps_depart, setGps_arrivee, setDistance } from "../../store/datas";
-import askGPSVille from '../../services/gpsservice';
+import askGPSVille from '../../services/gpsService';
 import '../../css/InputComponent.css';
 import _ from 'lodash';
 import { debounce } from 'lodash';
