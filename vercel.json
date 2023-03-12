@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "client/**",
+      "use": "@vercel/static-build"
+    },
+    {
+      "src": "api/**",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "Soap/**",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/api/soap(.*)", "dest": "Soap/index.js" },
+    { "src": "/api(.*)", "dest": "api/server.js" },
+    { "src": "/(.*)", "dest": "client/index.html" }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "8080"
+  }
+}

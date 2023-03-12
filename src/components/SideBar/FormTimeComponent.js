@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setDistance, setAutonomie, setTempsChargement, setTemps } from "../../store/datas";
-import sendSoapRequest from '../../services/soapservice';
+import sendSoapRequest from '../../services/soapService';
 import '../../css/FormTimeComponent.css'
 import coutCalcul from '../../services/coutService';
 var soap = require('soap-everywhere');
@@ -17,22 +17,17 @@ function FormTimeComponent() {
     var tempsChargement = useSelector((state) => state.datas.tempsChargement);
   var temps = useSelector((state) => state.datas.temps);
   
-  var [cout, setCout] = useState(0);
-  
-  const callAPI = () => {
-    fetch('http://localhost:8081/calculer-cout/' + distance).then(response => {
-        return response.json();
-    }).then(data => {
-        setCout(data.cout)
-    });
-  }
+  var cout = useSelector((state) => state.datas.cout);
+    
+  // const callAPI = () => {
+  //   fetch('https://api-louisebld.vercel.app/calculer-cout/' + distance).then(response => {
+  //       return response.json();
+  //   }).then(data => {
+  //       setCout(data.cout)
+  //   });
+  // }
   
 
-  const callSoap = () => {
-    sendSoapRequest(distance, autonomie, tempsChargement).then((result) => {
-      dispatch(setTemps(result));
-    });
-  }
 
   function formatTemps(temps) {
     const heures = Math.floor(temps / 60);
@@ -54,17 +49,26 @@ function FormTimeComponent() {
         <div className="divform">
             <form>
           <label>Distance </label>
-          <input type="number" name="distance" value={distance} onChange={handleDistanceChange} placeholder="km"/>
+          <div className="divInput">
+            <input type="number" name="distance" value={distance} onChange={handleDistanceChange} placeholder="km" />
+            <p className="text">km.</p>
+            </div>
           <label>Autonomie</label>
-          <input type="number" name="autonomie" value={autonomie} onChange={handleAutonomieChange} placeholder="km" />
+          <div className="divInput">
+            <input type="number" name="autonomie" value={autonomie} onChange={handleAutonomieChange} placeholder="km" />
+            <p className="text">km.</p>
+            </div>
           <label>Chargement</label>
+          <div className="divInput">
           <input type="number" name="chargement" value={tempsChargement} onChange={handleTempsChargementChange} placeholder="min." />
-          <button type="button" onClick={callSoap}>Calculer</button>
+            <p className="text">mn.</p>
+            </div>
+
+          {/* <button type="button" onClick={callSoap}>Calculer</button> */}
             </form>
           <div className="divtemps">
-            <p>Temps : {formatTemps(temps)}</p>
-            <button type="button" onClick={callAPI}>Calculer</button>
-            <p>Coût : {cout}€</p>
+            <p className="">Temps : {formatTemps(temps)}</p>
+            <p className="">Coût : {cout}€</p>
           </div>
 
         

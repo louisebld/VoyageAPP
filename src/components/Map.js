@@ -8,7 +8,7 @@ import L from 'leaflet';
 import 'leaflet-routing-machine';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { destinationPoint } from "../functions/destinationPoint";
-import findBorne from '../services/bornesservice'
+import findBorne from '../services/bornesService'
 import qql from 'graphql-tag';
 import { createClient, defaultExchanges } from '@urql/core';
 
@@ -22,10 +22,11 @@ var greenIcon = new Icon({
 })
   
 var map = null;
+var mapWaypoints = [];
 
 export const headers = {
-  'x-client-id': '6402f92d85c5c3f0221ae397',
-  'x-app-id': '6402f92d85c5c3f0221ae399'
+  'x-client-id': '634d6831d0930830249a0855',
+  'x-app-id': '634d6831d0930830249a0857'
 };
 
 
@@ -73,6 +74,8 @@ function Map() {
   var zoom = useSelector((state) => state.map.zoom);
   var center = useSelector((state) => state.map.center);
   var markers = useSelector((state) => state.map.markers);
+
+  var autonomie = useSelector((state) => state.datas.autonomie);
   
 
   var waypoints = useSelector((state) => state.map.waypoints);
@@ -84,8 +87,8 @@ function Map() {
     
     var indices = [];
     distancetotale = distancetotale/1000;
-    var nbRecharge = Math.round(distancetotale / autonomie);
-    for (var i = 0; i < nbRecharge; i++) {
+    var nbRecharge = Math.round(distancetotale / autonomie)-1;
+    for (var i = 1; i < nbRecharge+1; i++) {
       var indiceRecharge = Math.round((i * autonomie / distancetotale) * indiceMax);
       indices.push(indiceRecharge);
     }
@@ -114,12 +117,13 @@ function Map() {
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
+    mapWaypoints = [
+      L.latLng(gps1[0], gps1[1]),
+      L.latLng(gps2[0], gps2[1])
+    ]
     
     const controls = L.Routing.control({
-        waypoints: [
-            L.latLng(gps1[0], gps1[1]),
-            L.latLng(gps2[0], gps2[1])
-        ],
+        waypoints: mapWaypoints,
         createMarker: function(i, waypoint, n) {
           let icon;
           if (i === 0 || i === n - 1) {
@@ -142,37 +146,103 @@ function Map() {
 
 
     controls.on('routesfound', function (e) {
+
       var routes = e.routes;
 
       var summary = routes[0].summary;
       var distanceTotale = summary.totalDistance;
       var indiceMax = routes[0].waypointIndices[1];
 
-      var indicesPoint = calculIndiceCoordonnees(indiceMax, distanceTotale, 50);
+      // console.log("routes", routes)
+
+      // console.log("distance totale", distanceTotale)
+      // console.log("indice max", indiceMax)
+      
+      var indicesPoint = calculIndiceCoordonnees(indiceMax, distanceTotale, autonomie);
 
       let waypoints = controls.getWaypoints();
-      console.log("indice", indicesPoint)
+      // console.log("waypoints actuels", waypoints)
+      // console.log("indice", indicesPoint)
 
-      // inverse le tableau pour avoir les points de recharge dans le bon ordre
-      indicesPoint = indicesPoint.reverse();
+    //   // inverse le tableau pour avoir les points de recharge dans le bon ordre
 
-      console.log("indice", indicesPoint)
+      /* Reversing the order of the array. */
+      // indicesPoint = indicesPoint.reverse();
+
+      // console.log("indice reverse", indicesPoint)
+
+      var waypointssave = [];
+
+      console.log(routes)
+      console.log("ici aussi les potes")
+      console.log("indices", indicesPoint)
       indicesPoint.forEach((indice) => {
+        console.log("je passe ici", indice);
         var point = routes[0].coordinates[indice];
         
         var lat = point.lat;
         var lng = point.lng;
+
+        var way = L.latLng(lat + 0.1, lng);
+        console.log("way", way)
+        // waypointssave.push(way);
+
+
+    //     // console.log("les coordonnées", lat, lng)
+    //     // findBorne(lat, lng).then((result) => {
+    //     //   console.log(result.geo_point_borne);
+    //     //   L.marker([result.geo_point_borne[1], result.geo_point_borne[0]]).addTo(map);
+    //     //   // var waypoint = L.latLng(result.geo_point_borne[1], result.geo_point_borne[0]);
+    //     //   // waypoints.splice(1, 0, waypoint);
+    //     //   // controls.setWaypoints(waypoints);
+    //     // });
+
+        // L.marker([lat+0.05, lng]).addTo(map);
         
         client.query(chargingStationQuery, { lat, lng }).toPromise().then((result) => {
             // add waypoint
+          console.log("result", result)
           var waypoint = L.latLng(result.data.stationAround[0].location.coordinates[1], result.data.stationAround[0].location.coordinates[0]);
-          waypoints.splice(1, 0, waypoint);
-          controls.setWaypoints(waypoints);
+          waypointssave.push(waypoint);
+          console.log("waypointssave", waypointssave)
+
+      mapWaypoints = [
+        L.latLng(gps1[0], gps1[1]),
+        ...waypointssave,
+        L.latLng(gps2[0], gps2[1])
+      ]
+      controls.off('routesfound');
+
+      console.log("mapWaypoints", mapWaypoints)
+
+      controls.setWaypoints(mapWaypoints);
+
+
         });
+
         
 
       })
+
+
+      console.log("waypointssave", waypointssave)
+
+      var nouveau = [
+        L.latLng(45.564601, 5.917781),
+        L.latLng(40.564601, 4.917781),
+
+      ]
+
+      
+
     });
+
+
+
+    // controls.setWaypoints(waypoints);
+
+    // waypoints.add(L.latLng(gps2[0], gps2[1]));
+    // waypoints.add(L.latLng(gps2[0], gps2[1]));
 
     if (bounds[0].length > 0)
     {
