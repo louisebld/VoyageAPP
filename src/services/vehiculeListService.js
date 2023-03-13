@@ -1,10 +1,14 @@
 import { createClient, defaultExchanges } from '@urql/core';
 import qql from 'graphql-tag';
 
+const CLIENT_ID = process.env.REACT_APP_CHARGETRIP_CLIENT_ID;
+const APP_ID = process.env.REACT_APP_CHARGETRIP_APP_ID;
+
 export const headers = {
   'x-client-id': '6402f92d85c5c3f0221ae397',
   'x-app-id': '6402f92d85c5c3f0221ae399'
 };
+
 
 
 export const client = createClient({
