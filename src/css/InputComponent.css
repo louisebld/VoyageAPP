@@ -5,6 +5,8 @@
 
 .city-input {
     width:80%;
+    margin-right:5px;
+    margin-left:5px;
 }
 
 .city-suggestions {

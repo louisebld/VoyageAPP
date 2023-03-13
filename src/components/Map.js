@@ -57,11 +57,6 @@ function Map() {
     return indices;
   }
 
-  // function askBorne(lat, lng) {
-  //   client.query(chargingStationQuery, { lat, lng }).toPromise().then((result) => {
-  //     console.log(result);
-  //   });
-
 
   useEffect(() => {
 
@@ -113,24 +108,10 @@ function Map() {
       var summary = routes[0].summary;
       var distanceTotale = summary.totalDistance;
       var indiceMax = routes[0].waypointIndices[1];
-
-      // console.log("routes", routes)
-
-      // console.log("distance totale", distanceTotale)
-      // console.log("indice max", indiceMax)
       
-      var indicesPoint = calculIndiceCoordonnees(indiceMax, distanceTotale, autonomie);
+      var indicesPoint = calculIndiceCoordonnees(indiceMax, distanceTotale, autonomie-15);
 
       let waypoints = controls.getWaypoints();
-      // console.log("waypoints actuels", waypoints)
-      // console.log("indice", indicesPoint)
-
-    //   // inverse le tableau pour avoir les points de recharge dans le bon ordre
-
-      /* Reversing the order of the array. */
-      // indicesPoint = indicesPoint.reverse();
-
-      // console.log("indice reverse", indicesPoint)
 
       var waypointssave = [];
 
@@ -146,20 +127,7 @@ function Map() {
 
         var way = L.latLng(lat + 0.1, lng);
         console.log("way", way)
-        // waypointssave.push(way);
 
-
-    //     // console.log("les coordonnées", lat, lng)
-    //     // findBorne(lat, lng).then((result) => {
-    //     //   console.log(result.geo_point_borne);
-    //     //   L.marker([result.geo_point_borne[1], result.geo_point_borne[0]]).addTo(map);
-    //     //   // var waypoint = L.latLng(result.geo_point_borne[1], result.geo_point_borne[0]);
-    //     //   // waypoints.splice(1, 0, waypoint);
-    //     //   // controls.setWaypoints(waypoints);
-    //     // });
-
-        // L.marker([lat+0.05, lng]).addTo(map);
-        
         client.query(chargingStationQuery, { lat, lng }).toPromise().then((result) => {
             // add waypoint
           console.log("result", result)
