@@ -1,4 +1,5 @@
-import { gql } from "graphql-request";
+import qql from 'graphql-tag';
+import { createClient, defaultExchanges } from '@urql/core';
 
 export const headers = {
   'x-client-id': '6402f92d85c5c3f0221ae397',
@@ -14,9 +15,7 @@ export const client = createClient({
   exchanges: [...defaultExchanges],
 });
 
-
-
-export const chargingStationQuery = gql`
+export const chargingStationQuery = qql`
     query stationAround ($lat: Float!, $lng: Float!) {
         stationAround(
             filter: {

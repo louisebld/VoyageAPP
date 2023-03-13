@@ -1,9 +1,11 @@
+import { API_GPS_URL } from '../constantes';
+
 function askGPSVille(nom) {
     // à partir du nom de la ville, on va chercher les coordonnées GPS
     console.log("askGPSVille : ", nom)
     return new Promise((resolve, reject) => {
         // fetch('https://api-adresse.data.gouv.fr/search/?q=' + nom)
-        fetch('https://nominatim.openstreetmap.org/search.php?q=' + nom + '&format=jsonv2&type=city')
+        fetch(API_GPS_URL + nom + '&format=jsonv2&type=city')
         .then(response => response.json())
         .then(data => {
             // var lat1 = data.features[0].geometry.coordinates[0];

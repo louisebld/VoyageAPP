@@ -11,9 +11,11 @@ import { destinationPoint } from "../functions/destinationPoint";
 import findBorne from '../services/bornesService'
 import qql from 'graphql-tag';
 import { createClient, defaultExchanges } from '@urql/core';
-
+import {chargingStationQuery} from '../services/stationListService';
 import { Icon } from 'leaflet'
 import { kmcharge } from "../functions/kmcharge";
+import {client} from '../services/stationListService';
+
 const iconMarker = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] });
 var greenIcon = new Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
@@ -23,47 +25,6 @@ var greenIcon = new Icon({
   
 var map = null;
 var mapWaypoints = [];
-
-export const headers = {
-  'x-client-id': '634d6831d0930830249a0855',
-  'x-app-id': '634d6831d0930830249a0857'
-};
-
-
-export const client = createClient({
-  url: 'https://api.chargetrip.io/graphql',
-  fetchOptions: {
-    method: 'POST',
-    headers,
-  },
-  exchanges: [...defaultExchanges],
-});
-
-const chargingStationQuery = qql`
-    query stationAround ($lat: Float!, $lng: Float!) {
-        stationAround(
-            filter: {
-                location: { 
-                    type: Point,
-                    coordinates: [$lng, $lat]
-                }
-                distance: 10000
-            }
-            size: 10
-            page: 0
-        ) {
-            location {
-                type
-                coordinates
-            }
-            power
-            speed
-            status
-            }
-        }
-    `;
-
-
 
 function Map() {
   // const position = [51.505, -0.09]
