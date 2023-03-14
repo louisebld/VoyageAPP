@@ -45,10 +45,6 @@ const Carrousel = () => {
     setCurrentCarIndex(index);
   };
   
-  // useEffect(() => {
-  //   const marques = [...new Set(cars.vehicleList.map((car) => car.naming.make))];
-  //   setMarques(marques);
-  // }, [cars.vehicleList]);
     
   useEffect(() => {
     client.query(vehicleListQuery, { page: 10, size: 80, search: "" }).toPromise().then((result) => {

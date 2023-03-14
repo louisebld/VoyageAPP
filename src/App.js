@@ -4,7 +4,6 @@ import {useSelector, useDispatch } from 'react-redux';
 import StartEndComponent from './components/Header/StartEndComponent';
 import Map from './components/Map';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
-import List from './components/list';
 import qql from 'graphql-tag';
 import { createClient, defaultExchanges } from '@urql/core';
 import { vehicleListQuery } from './services/vehiculeListService';
@@ -44,13 +43,9 @@ function App() {
             </div>
 
           </div>
-          {/* <p>{borneDepart}</p> */}
-          {/* <List/> */}
 
-        {/* <button>Search</button> */}
         </div>
         <SideBar />
-        {/* <List/> */}
       </>
       </ApolloProvider>
     

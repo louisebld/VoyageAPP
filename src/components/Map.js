@@ -166,13 +166,6 @@ function Map() {
 
     });
 
-
-
-    // controls.setWaypoints(waypoints);
-
-    // waypoints.add(L.latLng(gps2[0], gps2[1]));
-    // waypoints.add(L.latLng(gps2[0], gps2[1]));
-
     if (bounds[0].length > 0)
     {
       map.fitBounds(bounds);

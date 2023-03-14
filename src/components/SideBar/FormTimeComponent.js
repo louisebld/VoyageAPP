@@ -19,16 +19,6 @@ function FormTimeComponent() {
   
   var cout = useSelector((state) => state.datas.cout);
     
-  // const callAPI = () => {
-  //   fetch('https://api-louisebld.vercel.app/calculer-cout/' + distance).then(response => {
-  //       return response.json();
-  //   }).then(data => {
-  //       setCout(data.cout)
-  //   });
-  // }
-  
-
-
   function formatTemps(temps) {
     const heures = Math.floor(temps / 60);
     const minutes = temps % 60;

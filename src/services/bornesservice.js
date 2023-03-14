@@ -1,3 +1,4 @@
+// non utilisé : bornes api charge trip
 function findBorne(lat, long) {
     // https://odre.opendatasoft.com/api/records/1.0/search/?dataset=bornes-irve&q=&facet=region&facet=departement
     var distance = 100000;
