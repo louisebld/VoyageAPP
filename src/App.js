@@ -22,14 +22,6 @@ function App() {
 
 
   const dispatch = useDispatch();
-  
-  // const callBorne = () => {
-  //   // console.log(gps1, gps2)
-  //   findBorne(gps1[0], gps1[1]).then((result) => {
-  //     console.log("borne :", result)
-  //     setBorneDepart(result.ad_station);
-  //   });
-  // }
 
   return (
     <ApolloProvider client={client}>

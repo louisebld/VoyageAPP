@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState, useLayoutEffect } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import "../../css/Carrousel.css";
-import { vehiculeList } from '../../assets/vehiculelist.js'
 import {setAutonomie, setTempsChargement } from "../../store/datas";
 
 import { client, vehicleListQuery } from '../../services/vehiculeListService'
